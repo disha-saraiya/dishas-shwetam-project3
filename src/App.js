@@ -1,14 +1,28 @@
 import './App.css';
 import Navigation from './components/Navigation';
-import background from "./background.jpg";
-import background2 from './background2.jpg';
+import Home from './components/Home';
+import Login from './components/Login'; 
+import Signup from './components/Signup'; 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useParams,
+} from 'react-router-dom';
 
 
 function App() {
   return (
     <div className="App">
       <Navigation />
-      Welcome to The Wellness Forum
+      <Router>
+      <Switch>
+        <Route exact path = "/"><Home /></Route>
+        <Route path = "/login"><Login /></Route>
+        <Route path = "/signup"><Signup /></Route>
+      </Switch>
+      </Router>
+      
     </div>
   );
 }
