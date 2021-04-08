@@ -15,3 +15,8 @@
 .navigation{
   background-color: lightgray; 
 }
+
+.login_container{
+  text-align: center;
+  margin: 80px; 
+}

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
+import '../App.css'; 
 
 
 function Login(){
     return(
-        <div id="login" className = "container">
+        <div>
+            <h3> Login to The Wellness Forum </h3>
+        <div id="login" className = "login_container">
             <Form>
             <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="Enter email" />
-            <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-            </Form.Text>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
@@ -19,9 +19,10 @@ function Login(){
             <Form.Control type="password" placeholder="Password" />
             </Form.Group>
             <Button variant="primary" type="submit">
-                Submit
+                Login
             </Button>
             </Form>
+        </div>
         </div>
         )
 }

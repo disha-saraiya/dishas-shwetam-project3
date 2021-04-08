@@ -4,6 +4,9 @@ import { Row, Col, Form, Button } from 'react-bootstrap';
 
 function Signup(){
     return(
+        <div>
+            <h3> Welcome to The Wellness Forum </h3>
+            <h3> Create an account </h3>
         <div className = "container">
             <br />
             <Form>
@@ -30,20 +33,21 @@ function Signup(){
 
             <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control type="password" placeholder="Password"/>
             </Form.Group>
 
             
             <Form.Group controlId="formBasicPassword">
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control type="confirmpassword" placeholder="Confirm Password" />
+            <Form.Control type="password" placeholder="Confirm Password"/>
             </Form.Group>
 
 
             <Button variant="primary" type="submit">
-                Submit
+                Sign me up!
             </Button>
             </Form>
+        </div>
         </div>
         )
 }
