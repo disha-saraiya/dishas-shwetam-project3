@@ -6,9 +6,8 @@ function Signup(){
     return(
         <div>
             <h3> Welcome to The Wellness Forum </h3>
-            <h3> Create an account </h3>
-        <div className = "container">
-            <br />
+            <h4> Create an account </h4>
+            <div className = "container">
             <Form>
 
             <Form.Label>Name</Form.Label>
@@ -30,6 +29,17 @@ function Signup(){
                 We'll never share your email with anyone else.
             </Form.Text>
             </Form.Group>
+
+        
+            <Form.Group controlId="formBasicEmail">
+            <Form.Label>Username</Form.Label>
+            <Form.Control type="username" placeholder="Enter a username" />
+            <Form.Text className="text-muted">
+                Select a funky username, something you love!
+            </Form.Text>
+            </Form.Group>
+
+
 
             <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
