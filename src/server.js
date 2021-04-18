@@ -1,14 +1,44 @@
-const mongoose = require('mongoose');
+var express = require('express');
+//var log = require('morgan')('dev');
+var bodyParser = require('body-parser');
 
+var properties = require('./config/properties');
+var db = require('./config/database');
+//hero routes
+var herosRoutes = require('./api/user.routes');
+const userRoutes = require('./api/user.routes');
+var app = express();
 
-// This is the default address for MongoDB.
-// Make sure MongoDB is running!
-const mongoEndpoint = 'mongodb+srv://disha:cs5610@cluster-neu.2i4eo.mongodb.net/wellnessforum?retryWrites=true&w=majority';
-// useNewUrlParser is not required, but the old parser is deprecated
-mongoose.connect(mongoEndpoint, { useNewUrlParser: true });
+//configure bodyparser
+var bodyParserJSON = bodyParser.json();
+var bodyParserURLEncoded = bodyParser.urlencoded({extended:true});
 
-// Get the connection string
-const db = mongoose.connection;
+//initialise express router
+var router = express.Router();
 
-// This will create the connection, and throw an error if it doesn't work
-db.on('error', console.error.bind(console, 'Error connecting to MongoDB:'));
+// call the database connectivity function
+db();
+
+// configure app.use()
+//app.use(log);
+app.use(bodyParserJSON);
+app.use(bodyParserURLEncoded);
+
+// Error handling
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+     res.setHeader("Access-Control-Allow-Credentials", "true");
+     res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+     res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Origin,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,Authorization");
+   next();
+ });
+
+// use express router
+app.use('/api',router);
+//call heros routing
+userRoutes(router);
+
+// intialise server
+app.listen(properties.PORT, (req, res) => {
+    console.log(`Server is running on ${properties.PORT} port.`);
+})

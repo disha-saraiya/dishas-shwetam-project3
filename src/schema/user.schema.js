@@ -1,7 +1,8 @@
+var mongoose = require('mongoose');
 
-const Schema = require('mongoose').Schema;
+var Schema = mongoose.Schema;
 
-exports.UserSchema = new Schema({
+var UserSchema = new Schema({
     // mongoose automically gives this an _id attribute of ObjectId
     userName: String, 
     emailId: String, 
@@ -12,3 +13,5 @@ exports.UserSchema = new Schema({
     },
     isActive: Boolean
 }, {collection: 'users'}); 
+
+module.exports = UserSchema;
