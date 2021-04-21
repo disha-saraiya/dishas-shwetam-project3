@@ -5,6 +5,8 @@ exports.createUser = function (req, res, next) {
         userName: req.body.userName,
         emailId: req.body.emailId,
         password:req.body.password,
+        firstName: req.body.firstName, 
+        lastName: req.body.lastName,
         isActive:true
     };
 
@@ -51,9 +53,11 @@ exports.updateUser = function(req, res, next) {
         userName: req.body.userName,
         emailId: req.body.emailId,
         password:req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         isActive:true
     }
-    Users.update({_id: req.params.id}, user, function(err, user) {
+    Users.updateOne({_id: req.params.id}, user, function(err, user) {
         if(err) {
             res.json({
                 error : err

@@ -1,9 +1,9 @@
 var Users = require('./user.controller');
 
 module.exports = function(router) {
-    router.post('/create', Users.createUser);
-    router.get('/get', Users.getUsers);
-    router.get('/get/:name', Users.getUser);
-    router.put('/update/:id', Users.updateUser);
-    router.delete('/remove/:id', Users.removeUser);
+    router.post('/createUser', Users.createUser);
+    router.get('/getUsers', Users.getUsers);
+    router.get('/getUser/:name', Users.getUser);
+    router.put('/updateUser/:id', Users.updateUser);
+    router.delete('/removeUser/:id', Users.removeUser);
 }
