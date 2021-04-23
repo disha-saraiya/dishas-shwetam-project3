@@ -2,8 +2,7 @@ var Users = require('./user.controller');
 var Comments = require('./comments.controller');
 var Posts = require('./posts.controller');
 
-module.exports = function(router) {
-    router.post('/create', Users.createUser);
+module.exports = function(router) { router.post('/create', Users.createUser);
     router.get('/get', Users.getUsers);
     router.get('/get/:name', Users.getUser);
     router.put('/update/:id', Users.updateUser);
@@ -19,4 +18,3 @@ module.exports = function(router) {
     router.put('/comments/update/:id', Comments.updateComment);
     router.delete('/comments/remove/:id', Comments.removeComment);
 }
-

@@ -5,6 +5,8 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
     // mongoose automically gives this an _id attribute of ObjectId
     userName: String, 
+    firstName: String, 
+    lastName: String, 
     emailId: String, 
     password: String, 
     createdAt: {
