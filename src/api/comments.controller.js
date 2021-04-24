@@ -2,10 +2,8 @@ var Comments = require('./comments.dao');
 
 exports.createComment = function (req, res, next) {
     var comment = {
-        userName: req.body.userName,
-        emailId: req.body.emailId,
-        password:req.body.password,
-        isActive:true
+       userId:req.body.userId,
+       content:req.body.content
     };
 
     Comments.create(comment, function(err, comment) {
@@ -48,10 +46,8 @@ exports.getComment = function(req, res, next) {
 
 exports.updateComment = function(req, res, next) {
     var comment = {
-        userName: req.body.userName,
-        emailId: req.body.emailId,
-        password:req.body.password,
-        isActive:true
+        userId:req.body.userId,
+        content:req.body.content
     }
     Comments.update({_id: req.params.id}, comment, function(err, comment) {
         if(err) {

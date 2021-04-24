@@ -7,8 +7,8 @@ UserSchema.statics = {
         user.save(cb);
     },
 
-    get: function(query, cb) {
-        this.find(query, cb);
+    get: function(username) {
+        return this.findOne({username: username}).exec();
     },
 
     getByName: function(query, cb) {

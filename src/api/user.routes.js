@@ -18,4 +18,6 @@ module.exports = function(router) {
     router.get('/comments/get/:name', Comments.getComment);
     router.put('/comments/update/:id', Comments.updateComment);
     router.delete('/comments/remove/:id', Comments.removeComment);
+
+    router.post('/login',Users.login);
 }

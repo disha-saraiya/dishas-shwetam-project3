@@ -7,6 +7,9 @@ var db = require('./config/database');
 //hero routes
 var herosRoutes = require('./api/user.routes');
 const userRoutes = require('./api/user.routes');
+//authentication
+const cookieParser = require('cookie-parser');
+
 var app = express();
 
 //configure bodyparser
@@ -37,6 +40,9 @@ app.use(function(req, res, next) {
 app.use('/api',router);
 //call heros routing
 userRoutes(router);
+
+//authentication
+app.use(cookieParser());
 
 // intialise server
 app.listen(properties.PORT, (req, res) => {
