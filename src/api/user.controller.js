@@ -112,11 +112,19 @@ exports.login = function(req, res, next) {
             if (response.password !== password) {
                 return res.status(402).send("Password does not match");
             }
+            else{
+                const loggedInUser = {
+                    id:response._id,
+                    username:response.userName,
+                    email:response.emailId,
+                    firstName:response.firstName,
+                    lastName:response.lastName,
+                    createdAt:response.createdAt
+                }
 
-            const token = jwt.sign({username: response.username} , 'scented_candle')
-
-            res.cookie('webdevtoken', token).status(200).send(response);
-
+                const token = jwt.sign(loggedInUser , 'scented_candle')
+                res.cookie('webdevtoken', token).status(200).send(response);
+            }
         }, (error) => {
             res.status(401).send(error)
         });
