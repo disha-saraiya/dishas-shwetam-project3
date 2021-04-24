@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 exports.createUser = function (req, res, next) {
     var user = {
-        userName: req.body.userName,
+        username: req.body.username,
         emailId: req.body.emailId,
         password:req.body.password,
         firstName: req.body.firstName, 
@@ -19,7 +19,7 @@ exports.createUser = function (req, res, next) {
             })
         }
         res.cookie({
-            webtoken:jwt.sign({userName:users.userName}, 'scented_candle')
+            webtoken:jwt.sign({username: user.username}, 'scented_candle')
         })
         res.json({
             status:200,
@@ -49,12 +49,12 @@ exports.getUser = function(req, res, next) {
             })
         }
         res.cookie({
-            users: jwt.sign({userName:users.userName},"scented_candle")
+            users: jwt.sign({username:users.username},"scented_candle")
         })
         res.json({
             status:200,
             message:"User logged in successfully",
-            users: users.userName
+            users: users.username
         })
 
     })
@@ -62,7 +62,7 @@ exports.getUser = function(req, res, next) {
 
 exports.updateUser = function(req, res, next) {
     var user = {
-        userName: req.body.userName,
+        username: req.body.username,
         emailId: req.body.emailId,
         password:req.body.password,
         firstName: req.body.firstName,
@@ -96,14 +96,15 @@ exports.removeUser = function(req, res, next) {
 
 
 exports.login = function(req, res, next) {
-    const username = req.body.username;
+    // const username = req.body.username;
+    const email = req.body.email; 
     const password = String(req.body.password);
 
-    if (!username || !password) {
+    if (!email || !password) {
         res.sendStatus(400);
     }
 
-    return Users.get(username)
+    return Users.getByEmail(email)
         .then((response) => {
             console.log(response);
             console.log(password);
@@ -112,26 +113,25 @@ exports.login = function(req, res, next) {
                 return res.status(402).send("Password does not match");
             }
 
-            const token = jwt.sign(response.username, 'salty_salt')
-
+            const token = jwt.sign({username: response.username} , 'scented_candle')
 
             res.cookie('webdevtoken', token).status(200).send(response);
-        }, (error) => {
 
+        }, (error) => {
             res.status(401).send(error)
         });
  }
 
 /*
  exports.login = function(req, res, next) {
-    var userName = req.body.userName;
+    var username = req.body.username;
     var password = req.body.password;
 
-    if (!userName || !password) {
+    if (!username || !password) {
         res.sendStatus(400);
     }
 
-    return Users.get(req.body.userName,function(err, user) {
+    return Users.get(req.body.username,function(err, user) {
         let passwordMatch = true;
         if(password !== user.password){
             passwordMatch = false;    
@@ -146,7 +146,7 @@ exports.login = function(req, res, next) {
         }
         else{
            res.json({
-                token : jwt.sign({userName: response.userName}, 'scented_candle'),
+                token : jwt.sign({username: response.username}, 'scented_candle'),
                 message : "User loggedin successfully",
                 status : 200
         })

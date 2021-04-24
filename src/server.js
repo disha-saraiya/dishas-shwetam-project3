@@ -2,6 +2,9 @@ var express = require('express');
 //var log = require('morgan')('dev');
 var bodyParser = require('body-parser');
 
+var cors = require('cors');
+
+
 var properties = require('./config/properties');
 var db = require('./config/database');
 //hero routes
@@ -11,6 +14,7 @@ const userRoutes = require('./api/user.routes');
 const cookieParser = require('cookie-parser');
 
 var app = express();
+app.use(cors()); 
 
 //configure bodyparser
 var bodyParserJSON = bodyParser.json();

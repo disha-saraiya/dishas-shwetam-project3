@@ -8,7 +8,11 @@ UserSchema.statics = {
     },
 
     get: function(username) {
-        return this.findOne({username: username}).exec();
+        return this.findOne({userName: username}).exec();
+    },
+
+    getByEmail: function(email){
+        return this.findOne({emailId: email}).exec(); 
     },
 
     getByName: function(query, cb) {
