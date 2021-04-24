@@ -2,10 +2,8 @@ var Posts = require('./posts.dao');
 
 exports.createPost = function (req, res, next) {
     var post = {
-        userName: req.body.userName,
-        emailId: req.body.emailId,
-        password:req.body.password,
-        isActive:true
+        title: req.body.title, 
+        description: req.body.description
     };
 
     Posts.create(post, function(err, post) {
@@ -15,7 +13,7 @@ exports.createPost = function (req, res, next) {
             })
         }
         res.json({
-            message : "Posts created successfully"
+            message : "Post created successfully"
         })
     })
 }
@@ -48,10 +46,8 @@ exports.getPost = function(req, res, next) {
 
 exports.updatePost = function(req, res, next) {
     var post = {
-        userName: req.body.userName,
-        emailId: req.body.emailId,
-        password:req.body.password,
-        isActive:true
+        title: req.body.title, 
+        description: req.body.description
     }
     Posts.update({_id: req.params.id}, post, function(err, post) {
         if(err) {

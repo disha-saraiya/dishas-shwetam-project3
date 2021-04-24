@@ -12,6 +12,17 @@
   overflow-x: hidden;
 }
 
+.home_container{
+  display: flex; 
+  justify-content: center;
+}
+
+.posts_container{
+  width: 70%; 
+  height: auto; 
+  background-color: rgb(182, 241, 243);
+  
+}
 .navigation{
   background-color: lightgray; 
 }
