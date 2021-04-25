@@ -94,7 +94,6 @@ exports.removeUser = function(req, res, next) {
     })
 }
 
-
 exports.login = function(req, res, next) {
     // const username = req.body.username;
     const email = req.body.email; 
@@ -130,38 +129,19 @@ exports.login = function(req, res, next) {
         });
  }
 
-/*
- exports.login = function(req, res, next) {
-    var username = req.body.username;
-    var password = req.body.password;
+ // router.post('/loggedIn', cookie_middleware (req, res) => {
+//     if (req.username) {
+//         res.send(true);
+//     } else {
+//         res.send(false);
+//     }
+// })
 
-    if (!username || !password) {
-        res.sendStatus(400);
-    }
+// router.post('/logOut', (req, res) => {
+//     res.clearCookie('webdevtoken');
+//     res.sendStatus(200);
+// })
 
-    return Users.get(req.body.username,function(err, user) {
-        let passwordMatch = true;
-        if(password !== user.password){
-            passwordMatch = false;    
-            err = "Passwords do not match";
-        }
-        
-        if(err || !passwordMatch) {
-            res.json({
-                error : err,
-                status: 401
-            })
-        }
-        else{
-           res.json({
-                token : jwt.sign({username: response.username}, 'scented_candle'),
-                message : "User loggedin successfully",
-                status : 200
-        })
-    }
-    })
- }
-*/
 
 
 

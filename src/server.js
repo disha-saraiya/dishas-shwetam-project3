@@ -52,3 +52,6 @@ app.use(cookieParser());
 app.listen(properties.PORT, (req, res) => {
     console.log(`Server is running on ${properties.PORT} port.`);
 })
+
+const session = require('express-session')
+app.use(session({secret: 'scented_candle'}));

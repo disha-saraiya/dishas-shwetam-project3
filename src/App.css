@@ -20,9 +20,16 @@
 .posts_container{
   width: 70%; 
   height: auto; 
-  background-color: rgb(182, 241, 243);
-  
+  background-color: rgb(182, 241, 243); 
 }
+
+.new_post_container{
+  width: 50%; 
+  height: auto; 
+  margin-top: 2em; 
+}
+
+
 .navigation{
   background-color: lightgray; 
 }

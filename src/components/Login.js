@@ -64,7 +64,7 @@ function Login(){
         <div>
             <h3> Login to The Wellness Forum </h3>
 
-        <div id="login" className = "login_container">
+            <div id="login" className = "login_container">
 
             <Form>
             <Form.Group controlId="formBasicEmail">

@@ -1,5 +1,6 @@
 var Posts = require('./posts.dao');
 
+
 exports.createPost = function (req, res, next) {
     var post = {
         title: req.body.title, 
