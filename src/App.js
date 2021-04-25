@@ -9,6 +9,7 @@ import {
   Route,
   useParams,
 } from 'react-router-dom';
+import NewPost from './components/NewPost';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route exact path = "/"><Home /></Route>
         <Route path = "/login"><Login /></Route>
         <Route path = "/signup"><Signup /></Route>
+        <Route path = "/new"><NewPost /></Route>
       </Switch>
       </Router>
       

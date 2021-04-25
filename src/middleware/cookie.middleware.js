@@ -8,7 +8,7 @@ module.exports = function(req, res, next) {
     } else {
         jwt.verify(wdt, 'scented_candle', function(error, decoded_token) {
             if (error) {
-                return response.status(499).send("Invalid token");
+                return response.status(401).send("Unauthorized: No valid token");
             } else {
                 req.username = decoded_token.username;
                 req.id = decoded_token.id;
