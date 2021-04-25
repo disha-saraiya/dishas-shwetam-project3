@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var UserSchema = require('./user.model');
+var bcrypt = require('bcrypt');
+
 
 UserSchema.statics = {
     create : function(data, cb) {
@@ -11,8 +13,8 @@ UserSchema.statics = {
         return this.findOne({userName: username}).exec();
     },
 
-    getByEmail: function(email){
-        return this.findOne({emailId: email}).exec(); 
+    getByEmail: function(email,cb){
+        return this.findOne({emailId: email},cb); 
     },
 
     getByName: function(query, cb) {

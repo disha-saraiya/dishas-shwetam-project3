@@ -3,6 +3,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var cors = require('cors');
+var mongoose = require('mongoose');
+//session maintenance
+var session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 
 var properties = require('./config/properties');
@@ -26,6 +30,22 @@ var router = express.Router();
 // call the database connectivity function
 db();
 
+
+//authentication
+app.use(cookieParser());
+
+
+
+
+//use sessions for tracking logins
+app.use(session({
+  secret: 'scented_candle',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({mongooseConnection : mongoose.connection})
+}));
+
+
 // configure app.use()
 //app.use(log);
 app.use(bodyParserJSON);
@@ -45,8 +65,6 @@ app.use('/api',router);
 //call heros routing
 userRoutes(router);
 
-//authentication
-app.use(cookieParser());
 
 // intialise server
 app.listen(properties.PORT, (req, res) => {

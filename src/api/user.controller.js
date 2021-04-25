@@ -1,5 +1,6 @@
 var Users = require('./user.dao');
 const jwt = require('jsonwebtoken');
+var bcrypt = require('bcrypt');
 
 exports.createUser = function (req, res, next) {
     var user = {
@@ -11,6 +12,19 @@ exports.createUser = function (req, res, next) {
         isActive:true
     };
 
+    const loggedInUser = {
+        id:user._id,
+        username:user.userName,
+        email:user.emailId,
+        firstName:user.firstName,
+        lastName:user.lastName,
+        createdAt:user.createdAt
+    }
+
+    /*
+    bcrypt.hash(user.password, 10, function (err, hash) {
+      user.password = hash;
+    });*/
 
     Users.create(user, function(err, user) {
         if(err) {
@@ -18,9 +32,11 @@ exports.createUser = function (req, res, next) {
                 error : err
             })
         }
+        
         res.cookie({
-            webtoken:jwt.sign({username: user.username}, 'scented_candle')
+            webdevtoken:jwt.sign(loggedInUser , 'scented_candle')
         })
+        
         res.json({
             status:200,
             message:"User created successfully"
@@ -95,40 +111,91 @@ exports.removeUser = function(req, res, next) {
 }
 
 
+
+// GET /logout
+exports.logout = function(req, res, next) {
+    if (req.session!==null) {
+      // delete session object
+      req.session.destroy(function(err) {
+        if(err) {
+            res.status(400);
+            res.json({
+                status:400,
+                error : "User still loggedin"
+            });
+        } else {
+            res.status(200);
+            res.json({
+                message : "User logged out successfully"
+            });
+        }
+      });
+    }
+}
+
 exports.login = function(req, res, next) {
     // const username = req.body.username;
-    const email = req.body.email; 
+    const email = req.body.emailId; 
     const password = String(req.body.password);
 
     if (!email || !password) {
         res.sendStatus(400);
     }
 
-    return Users.getByEmail(email)
-        .then((response) => {
-            console.log(response);
-            console.log(password);
+    var loggedInUser ;
 
-            if (response.password !== password) {
-                return res.status(402).send("Password does not match");
+    return Users.getByEmail(email,function(err, user) {
+        if(!user || err){
+            res.status(400);
+            res.json({
+                status:400,
+                error : "User not present"
+            })
+        }
+        else{
+            bcrypt.compare(password, user.password, function (err, result) {
+                if (result === true) {
+                    res.status(200);
+                    res.json({
+                        loggedInUsers:loggedInUser,
+                        message : "User authenticated successfully"
+                    })
+                } else {
+                    res.status(402);
+                    res.json({
+                        status:402,
+                        message : "Passwords do not match"
+                    })
+                }
+            });
+        }
+    });
+        
+        
+        
+        
+        /*){
+            console.log("Email"+response.emailId);
+            console.log(response.user);
+            if (response.emailId) {
+                res.status(402).send("User not present");
             }
             else{
-                const loggedInUser = {
-                    id:response._id,
-                    username:response.userName,
-                    email:response.emailId,
-                    firstName:response.firstName,
-                    lastName:response.lastName,
-                    createdAt:response.createdAt
+                bcrypt.compare(password, response.password, function (err, result) {
+                if (result === true) {
+                    res.status(200).send("Password match");
+                } else {
+                    res.status(402).send("Password does not match");
                 }
-
-                const token = jwt.sign(loggedInUser , 'scented_candle')
-                res.cookie('webdevtoken', token).status(200).send(response);
+              })
             }
-        }, (error) => {
-            res.status(401).send(error)
-        });
- }
+            }, (error) => {
+            es.status(401).send(error)*/
+        }
+
+
+
+
 
 /*
  exports.login = function(req, res, next) {
