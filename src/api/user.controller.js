@@ -144,7 +144,7 @@ exports.login = function(req, res, next) {
             err.status = 401; 
             return next(err); 
         }else{
-            req.session.userId = user._id; 
+            req.session.user = user; 
             console.log('logged in');             
             return res.status(200).send(user);         
         }
@@ -152,7 +152,7 @@ exports.login = function(req, res, next) {
 }
     
 exports.isAuth = (req,res,next) => {
-    const sessUser = req.session.user;
+    const sessUser = req.session.cookie;
     if(sessUser) {
         next();
     }
@@ -162,14 +162,15 @@ exports.isAuth = (req,res,next) => {
     }
   };
   
-  exports.authChecker = (req, res) => {
-    const sessUser = req.session.user;
-    if (sessUser) {
-      return res.json(sessUser);
-    } else {
-      return res.status(401).json({ msg: "Unauthorized" });
+  exports.requireAuth = (req,res,next) => {
+    let user = req.session.user;
+    console.log(req.session);
+    console.log(req.session.user);
+    if(!user){
+      return res.status(403).json({message : 'Forbidden for further use'});
     }
-  };
+    next();
+  }
 
 // // THIS LOGIN WORKS 
 // exports.login = function(req, res, next) {
@@ -246,10 +247,10 @@ exports.isAuth = (req,res,next) => {
 //     }
 // })
 
-// router.post('/logOut', (req, res) => {
-//     res.clearCookie('webdevtoken');
-//     res.sendStatus(200);
-// })
+router.post('/logOut', (req, res) => {
+     res.clearCookie('webdevtoken');
+    res.sendStatus(200);
+})
 
 
 
