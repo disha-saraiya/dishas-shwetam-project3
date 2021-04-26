@@ -11,9 +11,13 @@ import {
 } from 'react-router-dom';
 import NewPost from './components/NewPost';
 
+import {Provider} from 'react-redux'; 
+import store from './store'; 
+
 
 function App() {
   return (
+    <Provider store={store}>
     <div className="App">
       <Navigation />
       <Router>
@@ -24,8 +28,8 @@ function App() {
         <Route path = "/new"><NewPost /></Route>
       </Switch>
       </Router>
-      
     </div>
+    </Provider>
   );
 }
 

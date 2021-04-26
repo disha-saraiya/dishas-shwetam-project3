@@ -2,16 +2,21 @@ import React, {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import '../App.css'; 
 import Home from './Home';
+import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import Axios from 'axios'; 
+import {userLogin, userLoginError} from '../actions'; 
+import {useSelector, useDispatch} from 'react-redux'; 
 
 
-function Login(){
-    const jwt = require('jsonwebtoken');
 
+function Login(props){
     //Holds they key pair value for each of our form fields.
     const [form, setForm] = useState({}); 
     const [errors, setErrors] = useState({});
+    const dispatch = useDispatch(); 
+    const [isLoggedIn, setIsLoggedIn] = useState({});
+
 
     //Function to update state of the form
     const setField = (field, value) => {
@@ -32,7 +37,6 @@ function Login(){
             const newErrors = {} 
 
             if(!email || email === '') newErrors.email = "Email ID cannot be blank."
-            //TODO : add username unique check 
             
             if(!password || password === '') newErrors.password = "Password cannot be blank."
             return newErrors
@@ -43,8 +47,6 @@ function Login(){
 
         const newErrors = findFormErrors()
         
-        //console.log(newErrors); 
-
         if(Object.keys(newErrors).length > 0){
             setErrors(newErrors)
             
@@ -55,15 +57,20 @@ function Login(){
             
             Axios.post('/api/login', form).then(function(response) {
                 console.log(response);
-                // res.redirect('/');
-                props.history.push('/'); 
-
+                dispatch(userLogin(response.data)); 
             }).catch(function(error){
                 console.log(error); 
+                //Dispatch the action to indicate an error in login. 
+                dispatch(userLoginError()); 
             });
         }
     }
-
+    
+    if(props.isUserLoggedIn){
+        return(
+            <Redirect to= '/'></Redirect>
+        )
+    }
 
     return(
         <div className = "home_container">
@@ -71,7 +78,7 @@ function Login(){
             <div id="login" className = "login_container">
             <h3> Login to The Wellness Forum </h3>
 
-            <Form>
+            
             <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="Enter email" 
@@ -91,10 +98,24 @@ function Login(){
             <Button variant="primary" type="submit" onClick = {(e) => handleSubmit(e)}>
                 Login
             </Button>
-            </Form>
         </div>
         </div>
         )
 }
 
-export default Login; 
+let mapStateToProps =  function (state, props){ 
+    console.log(state); 
+    return{
+        isUserLoggedIn: state.authReducer.isUserLoggedIn, 
+        user: state.authReducer.user
+    }
+}
+
+let mapDispatchToProps = function(dispatch, props){
+    return{
+        dispatch: dispatch, 
+        userLogin, userLoginError
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login); 

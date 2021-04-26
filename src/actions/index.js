@@ -1,4 +1,5 @@
 export const userLogin = (user) => {
+    console.log("User login action"); 
     return{
         type: 'USER_LOGIN_SUCCESS', 
         data: user       

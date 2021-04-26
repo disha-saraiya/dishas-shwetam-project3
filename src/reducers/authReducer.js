@@ -1,5 +1,6 @@
-export default function AuthReducer(state = {isUserLoggedIn: null, user:null}, action){
+export default function AuthReducer(state = {isUserLoggedIn: false, user:null}, action){
     if(action.type === 'USER_LOGIN_SUCCESS'){
+        console.log("Reached user login reducer"); 
         return{
            ...state, 
             isUserLoggedIn: true, 

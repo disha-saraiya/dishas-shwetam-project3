@@ -130,8 +130,6 @@ exports.logout = function(req, res, next) {
 }
 
 
-//Trial login - 
-
 exports.login = function(req, res, next) {
     const email = req.body.email; 
     const password = String(req.body.password);
@@ -148,11 +146,31 @@ exports.login = function(req, res, next) {
         }else{
             req.session.userId = user._id; 
             console.log('logged in');             
-            return res.status(200).send('logged in');         
+            return res.status(200).send(user);         
         }
     });
 }
-        
+    
+exports.isAuth = (req,res,next) => {
+    const sessUser = req.session.user;
+    if(sessUser) {
+        next();
+    }
+    else {
+        err = res.status(401).json("You Need to Be Logged in to do this. Access Denied ")
+        return err;
+    }
+  };
+  
+  exports.authChecker = (req, res) => {
+    const sessUser = req.session.user;
+    if (sessUser) {
+      return res.json(sessUser);
+    } else {
+      return res.status(401).json({ msg: "Unauthorized" });
+    }
+  };
+
 // // THIS LOGIN WORKS 
 // exports.login = function(req, res, next) {
 //     // const username = req.body.username;

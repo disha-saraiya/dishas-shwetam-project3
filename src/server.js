@@ -20,7 +20,7 @@ const userRoutes = require('./api/user.routes');
 const cookieParser = require('cookie-parser');
 
 var app = express();
-app.use(cors()); 
+app.use(cors({origin:'*'})); 
 
 //configure bodyparser
 var bodyParserJSON = bodyParser.json();
@@ -35,9 +35,6 @@ db();
 
 //authentication
 app.use(cookieParser());
-
-
-
 
 //use sessions for tracking logins
 app.use(session({
