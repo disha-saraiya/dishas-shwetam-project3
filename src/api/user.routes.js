@@ -20,5 +20,5 @@ module.exports = function(router) {
     router.delete('/comments/remove/:id', Comments.removeComment);
 
     router.post('/login',Users.login);
-    //router.get('/authchecker', Users.authChecker);
+    router.post('/logout', Users.logout)
 }

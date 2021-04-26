@@ -108,7 +108,6 @@ exports.removeUser = function(req, res, next) {
 
 
 
-// GET /logout
 exports.logout = function(req, res, next) {
     if (req.session!==null) {
       // delete session object
@@ -150,108 +149,13 @@ exports.login = function(req, res, next) {
         }
     });
 }
-    
-exports.isAuth = (req,res,next) => {
-    const sessUser = req.session.cookie;
-    if(sessUser) {
-        next();
-    }
-    else {
-        err = res.status(401).json("You Need to Be Logged in to do this. Access Denied ")
-        return err;
-    }
-  };
-  
+      
   exports.requireAuth = (req,res,next) => {
     let user = req.session.user;
     console.log(req.session);
     console.log(req.session.user);
     if(!user){
-      return res.status(403).json({message : 'Forbidden for further use'});
+      return res.status(403).json({message : 'You Need to Be Logged in to do this. Access Denied '});
     }
     next();
   }
-
-// // THIS LOGIN WORKS 
-// exports.login = function(req, res, next) {
-//     // const username = req.body.username;
-//     const email = req.body.emailId; 
-//     const password = String(req.body.password);
-
-//     if (!email || !password) {
-//         res.sendStatus(400);
-//     }
-
-//     var loggedInUser ;
-
-//     return Users.getByEmail(email,function(err, user) {
-//         if(!user || err){
-//             res.status(400);
-//             res.json({
-//                 status:400,
-//                 error : "User not present"
-//             })
-//         }
-//         else{
-//             bcrypt.compare(password, user.password, function (err, result) {
-//                 if (result === true) {
-//                     res.redirect('/'); 
-//                     // res.status(200);
-//                     // //If the user logs in, then store the req.session.userId = _id from MongoDB. 
-//                     // res.json({
-//                     //     loggedInUsers:loggedInUser,
-//                     //     mess`age : "User authenticated successfully"
-//                     // })
-//                     //Redirect the user to the homepage
-//                 } else {
-//                     res.json({
-//                         status:402,
-//                         message : "Passwords do not match"
-//                     })
-//                 }
-//             });
-//         }
-//     });
-// }
-        
-        
-        
-        /*){
-            console.log("Email"+response.emailId);
-            console.log(response.user);
-            if (response.emailId) {
-                res.status(402).send("User not present");
-            }
-            else{
-                bcrypt.compare(password, response.password, function (err, result) {
-                if (result === true) {
-                    res.status(200).send("Password match");
-                } else {
-                    res.status(402).send("Password does not match");
-                }
-              })
-            }
-            }, (error) => {
-            es.status(401).send(error)*/
-        
-
-
-
-
-
- // router.post('/loggedIn', cookie_middleware (req, res) => {
-//     if (req.username) {
-//         res.send(true);
-//     } else {
-//         res.send(false);
-//     }
-// })
-
-router.post('/logOut', (req, res) => {
-     res.clearCookie('webdevtoken');
-    res.sendStatus(200);
-})
-
-
-
-
