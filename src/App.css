@@ -20,7 +20,10 @@
 .posts_container{
   width: 70%; 
   height: auto; 
-  background-color: rgb(182, 241, 243); 
+}
+
+.post_card{
+  margin: 8px; 
 }
 
 .new_post_container{
@@ -35,6 +38,7 @@
 }
 
 .login_container{
+  width: 30%; 
+  margin-top: 8em; 
   text-align: center;
-  margin: 80px; 
 }

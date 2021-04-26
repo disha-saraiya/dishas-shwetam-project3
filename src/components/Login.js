@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import '../App.css'; 
+import Home from './Home';
+import { Redirect } from "react-router-dom";
 import Axios from 'axios'; 
 
 
@@ -49,9 +51,12 @@ function Login(){
         }else{
             //TODO: write form submission to API logic here
             alert('Form is correct, submitting to API');   
+            console.log(form); 
             
-            Axios.post('http://localhost:3000/api/login', form).then(function(response) {
+            Axios.post('/api/login', form).then(function(response) {
                 console.log(response);
+                // res.redirect('/');
+                props.history.push('/'); 
 
             }).catch(function(error){
                 console.log(error); 
@@ -61,10 +66,10 @@ function Login(){
 
 
     return(
-        <div>
-            <h3> Login to The Wellness Forum </h3>
+        <div className = "home_container">
 
             <div id="login" className = "login_container">
+            <h3> Login to The Wellness Forum </h3>
 
             <Form>
             <Form.Group controlId="formBasicEmail">

@@ -1,10 +1,12 @@
 import React from 'react';
 import {Card, Button} from 'react-bootstrap'; 
+import '../App.css'
 
 function Post(props){
     return(
-        <div>
-            <Card bg="light" text="info" className="text-center">
+        <div className = "home_container">
+        <div className = "posts_container">
+            <Card bg="light" text="info" className="post_card text-center">
             <Card.Header>{props.username}</Card.Header>
             <Card.Body>
             <Card.Title>{props.postTitle}</Card.Title>
@@ -16,6 +18,7 @@ function Post(props){
             </Card.Body>
             <Card.Footer className="text-muted">2 days ago</Card.Footer>
             </Card>
+        </div>
         </div>
         )
 }

@@ -54,7 +54,7 @@ function Signup(){
             //TODO: write form submission to API logic here
             alert('Form is correct, submitting to API'); 
 
-            Axios.post('http://localhost:3000/api/create', form).then(function(response) {
+            Axios.post('/api/create', form).then(function(response) {
                 console.log(response);
             }).catch(function(error){
                 console.log(error); 

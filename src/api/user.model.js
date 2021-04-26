@@ -17,6 +17,8 @@ var UserSchema = new Schema({
     isActive: Boolean
 }, {collection: 'users'}); 
 
+
+
 //hashing a password before saving it to the database
 UserSchema.pre('save', function (next) {
     var user = this;

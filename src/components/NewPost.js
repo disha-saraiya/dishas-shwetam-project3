@@ -53,7 +53,7 @@ function NewPost(){
             }else{
                 alert('Form is correct, submitting to API');
                 
-                axios.post('http://localhost:3000/api/posts/create', {
+                axios.post('/api/posts/create', {
                     title: form.title,
                     description: form.description
                 }).then(function(res) {

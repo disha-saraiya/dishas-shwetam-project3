@@ -32,11 +32,7 @@ exports.createUser = function (req, res, next) {
                 error : err
             })
         }
-        
-        res.cookie({
-            webdevtoken:jwt.sign(loggedInUser , 'scented_candle')
-        })
-        
+
         res.json({
             status:200,
             message:"User created successfully"
@@ -133,44 +129,71 @@ exports.logout = function(req, res, next) {
     }
 }
 
+
+//Trial login - 
+
 exports.login = function(req, res, next) {
-    // const username = req.body.username;
-    const email = req.body.emailId; 
+    const email = req.body.email; 
     const password = String(req.body.password);
 
     if (!email || !password) {
         res.sendStatus(400);
     }
 
-    var loggedInUser ;
-
-    return Users.getByEmail(email,function(err, user) {
-        if(!user || err){
-            res.status(400);
-            res.json({
-                status:400,
-                error : "User not present"
-            })
-        }
-        else{
-            bcrypt.compare(password, user.password, function (err, result) {
-                if (result === true) {
-                    res.status(200);
-                    res.json({
-                        loggedInUsers:loggedInUser,
-                        message : "User authenticated successfully"
-                    })
-                } else {
-                    res.status(402);
-                    res.json({
-                        status:402,
-                        message : "Passwords do not match"
-                    })
-                }
-            });
+    return Users.authenticate(email, password, function(error, user){
+        if(error || !user){
+            var err = new Error('Please enter the correct email or password.'); 
+            err.status = 401; 
+            return next(err); 
+        }else{
+            req.session.userId = user._id; 
+            console.log('logged in');             
+            return res.status(200).send('logged in');         
         }
     });
+}
         
+// // THIS LOGIN WORKS 
+// exports.login = function(req, res, next) {
+//     // const username = req.body.username;
+//     const email = req.body.emailId; 
+//     const password = String(req.body.password);
+
+//     if (!email || !password) {
+//         res.sendStatus(400);
+//     }
+
+//     var loggedInUser ;
+
+//     return Users.getByEmail(email,function(err, user) {
+//         if(!user || err){
+//             res.status(400);
+//             res.json({
+//                 status:400,
+//                 error : "User not present"
+//             })
+//         }
+//         else{
+//             bcrypt.compare(password, user.password, function (err, result) {
+//                 if (result === true) {
+//                     res.redirect('/'); 
+//                     // res.status(200);
+//                     // //If the user logs in, then store the req.session.userId = _id from MongoDB. 
+//                     // res.json({
+//                     //     loggedInUsers:loggedInUser,
+//                     //     mess`age : "User authenticated successfully"
+//                     // })
+//                     //Redirect the user to the homepage
+//                 } else {
+//                     res.json({
+//                         status:402,
+//                         message : "Passwords do not match"
+//                     })
+//                 }
+//             });
+//         }
+//     });
+// }
         
         
         
@@ -191,7 +214,7 @@ exports.login = function(req, res, next) {
             }
             }, (error) => {
             es.status(401).send(error)*/
-        }
+        
 
 
 

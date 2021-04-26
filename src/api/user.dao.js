@@ -14,7 +14,7 @@ UserSchema.statics = {
     },
 
     getByEmail: function(email,cb){
-        return this.findOne({emailId: email},cb); 
+        return this.findOne({emailId: email}, cb); 
     },
 
     getByName: function(query, cb) {
@@ -27,6 +27,27 @@ UserSchema.statics = {
 
     delete: function(query, cb) {
         this.findOneAndDelete(query,cb);
+    }, 
+
+    authenticate: function(email, password, callback){
+        return this.findOne({emailId: email}, function(err, user){
+            if(err){
+                return callback(err)
+            }else if (!user){
+                var err = new Error('User not found');
+                err.status = 401; 
+                return callback(err); 
+            }
+            console.log(user); 
+            console.log(password);
+            bcrypt.compare(password, user.password, function(err, result){
+                if(result === true){
+                    return callback(null, user); 
+                }else{
+                    return callback(); 
+                }
+            })
+        });
     }
 }
 

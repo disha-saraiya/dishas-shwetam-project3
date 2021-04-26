@@ -1,4 +1,6 @@
 var express = require('express');
+const path = require('path');
+
 //var log = require('morgan')('dev');
 var bodyParser = require('body-parser');
 
@@ -65,11 +67,13 @@ app.use('/api',router);
 //call heros routing
 userRoutes(router);
 
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('*', function (req, res) {
+res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 // intialise server
-app.listen(properties.PORT, (req, res) => {
-    console.log(`Server is running on ${properties.PORT} port.`);
-})
+app.listen(properties.PORT);
 
-const session = require('express-session')
 app.use(session({secret: 'scented_candle'}));
