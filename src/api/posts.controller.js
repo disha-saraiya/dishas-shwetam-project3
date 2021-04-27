@@ -18,7 +18,8 @@ exports.createPost = function (req, res, next) {
             })
         }
         res.json({
-            message : "Post created successfully"
+            message : "Post created successfully",
+            post: post
         })
     })
 }

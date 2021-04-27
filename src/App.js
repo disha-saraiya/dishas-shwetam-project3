@@ -13,6 +13,7 @@ import NewPost from './components/NewPost';
 
 import {Provider} from 'react-redux'; 
 import store from './store'; 
+import PostPage from './components/PostPage';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path = "/login"><Login /></Route>
         <Route path = "/signup"><Signup /></Route>
         <Route path = "/new"><NewPost /></Route>
+        <Route path = "/postPage"><PostPage /></Route>
       </Switch>
       </Router>
     </div>

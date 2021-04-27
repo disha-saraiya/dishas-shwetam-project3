@@ -13,7 +13,7 @@ module.exports = function(router) {
     router.get('/posts/get/:name', Posts.getPost);
     router.put('/posts/update/:id', Posts.updatePost);
     router.delete('/posts/remove/:id', Posts.removePost);
-    router.post('/comments/create', Comments.createComment);
+    router.post('/comments/create', Users.requireAuth, Comments.createComment);
     router.get('/comments/get', Comments.getComments);
     router.get('/comments/get/:name', Comments.getComment);
     router.put('/comments/update/:id', Comments.updateComment);

@@ -2,8 +2,9 @@ var Comments = require('./comments.dao');
 
 exports.createComment = function (req, res, next) {
     var comment = {
-       userId:req.body.userId,
-       content:req.body.content
+       userId: req.body.userId,
+       content: req.body.content, 
+       postId: req.body.postId
     };
 
     Comments.create(comment, function(err, comment) {

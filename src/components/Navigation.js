@@ -6,12 +6,16 @@ import axios from 'axios';
 function Navigation(){
 
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
+    const [firstName, setFirstName] = useState(""); 
+    
+
     
     useEffect(() => {
-        //Use to check whether the user is logged in or not, when they go to create a new post. 
         axios.post('/api/authorize').then((response) => {
             console.log(response); 
+            setFirstName(response.data.firstName);
             setIsLoggedIn(true); 
+
         }).catch((err) => {
             console.log(err);
             setIsLoggedIn(false); 
@@ -37,11 +41,14 @@ if(isLoggedIn){
                     <Navbar.Brand href="/">The Wellness Forum</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
+                    <Nav className="ml-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/new">New</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
+                    <Navbar.Text>
+                        Signed in as {firstName}
+                    </Navbar.Text>
                     <Button onClick = {(e) => handleLogout(e)}> Logout </Button>
     </Navbar>
     </div>
@@ -61,7 +68,6 @@ return(
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/new">New</Nav.Link>
                     <Nav.Link href="/login">Login</Nav.Link>
                     <Nav.Link href="/signup">Signup</Nav.Link>
                 </Nav>

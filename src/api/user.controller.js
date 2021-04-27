@@ -12,27 +12,13 @@ exports.createUser = function (req, res, next) {
         isActive:true
     };
 
-    const loggedInUser = {
-        id:user._id,
-        username:user.userName,
-        email:user.emailId,
-        firstName:user.firstName,
-        lastName:user.lastName,
-        createdAt:user.createdAt
-    }
-
-    /*
-    bcrypt.hash(user.password, 10, function (err, hash) {
-      user.password = hash;
-    });*/
-
     Users.create(user, function(err, user) {
         if(err) {
             res.json({
                 error : err
             })
         }
-
+        
         res.json({
             status:200,
             message:"User created successfully"
@@ -165,7 +151,7 @@ exports.requireAuth = (req,res,next) => {
 //Function to check whether user has logged in before rendering certain pages. 
 exports.isAuth = (req, res) => {
     if(req.session.user){
-        return res.status(200).json({message: 'Authorized'})
+        return res.status(200).json(req.session.user)
     }    
     return res.status(401).json({message: 'Unauthorized'})
 }

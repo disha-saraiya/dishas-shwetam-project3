@@ -6,7 +6,8 @@ var CommentsSchema = new Schema({
     // mongoose automically gives this an _id attribute of ObjectId
    createdAt: { type: Date, default: Date.now }, 
    content: String, 
-   userId: {type: mongoose.Schema.Types.ObjectId, ref: 'UserSchema'}, 
+   userId: mongoose.Schema.Types.ObjectId,
+   postId: mongoose.Schema.Types.ObjectId 
 }, {collection: 'comments'}); 
 
 module.exports = CommentsSchema;

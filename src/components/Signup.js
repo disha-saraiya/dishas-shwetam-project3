@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import Axios from 'axios'; 
+import { Redirect } from 'react-router';
 
 
 //https://dev.to/alecgrey/controlled-forms-with-front-and-backend-validations-using-react-bootstrap-5a2
 function Signup(){
     const axios = require('axios').default;
 
-    //Holds they key pair value for each of our form fields.
     const [form, setForm] = useState({}); 
     const [errors, setErrors] = useState({});
+    const [signup, setSignup] = useState(false); 
 
     //Function to update state of the form
     const setField = (field, value) => {
@@ -51,16 +52,24 @@ function Signup(){
             setErrors(newErrors)
             
         }else{
-            //TODO: write form submission to API logic here
-            alert('Form is correct, submitting to API'); 
-
             Axios.post('/api/create', form).then(function(response) {
                 console.log(response);
+                //Successful signup
+                setSignup(true); 
             }).catch(function(error){
                 console.log(error); 
+                setSignup(false); 
             });       
         }
     }
+
+
+    if(signup){
+        return(
+            <Redirect to = "/login"></Redirect>
+        )
+    }
+
 
     return(
         <div>
@@ -68,7 +77,6 @@ function Signup(){
             <h4> Create an account </h4>
             <div className = "container">
             <Form>
-
             <Form.Group>
             <Form.Label>Name</Form.Label>
             <Row>

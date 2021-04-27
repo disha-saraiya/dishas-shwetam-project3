@@ -26,7 +26,7 @@ return(
      {allPosts.map((post) => {
        return(
          <div>
-         <Post post = {post} postTitle = {post.title} username = {post.user.firstName} />
+         <Post post = {post} postTitle = {post.title} username = {post.user.firstName} showPost = {false} />
          </div>
        ) 
      })} 

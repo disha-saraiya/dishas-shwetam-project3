@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import {Form, Button} from 'react-bootstrap'; 
 import '../App.css'; 
+import PostPage from './PostPage'; 
 
 function NewPost(){
 
@@ -9,6 +10,8 @@ function NewPost(){
         const [form, setForm] = useState({}); 
         const [errors, setErrors] = useState({});
         const [isLoggedIn, setIsLoggedIn] = useState(false); 
+        const [post, setPost] = useState(null); 
+        //const [postSuccess, setPostSuccess] = useState(false); 
     
         useEffect(() => {
             //Use to check whether the user is logged in or not, when they go to create a new post. 
@@ -72,14 +75,21 @@ function NewPost(){
                 }).then(function(res) {
                     console.log(res);
                     alert('Post created successfully.');
-                    //setIsLoggedIn(true); 
+                    setPost(res.data.post); 
+
                 }).catch(function(error){
                     console.log(error); 
                     alert('You need to be logged in to create a post!')
-                    //setIsLoggedIn(false); 
                 })
             }
         } 
+
+        if(post !== null){
+            return(
+                <PostPage postTitle = {post.title} createdAt = {post.createdAt}
+                username = {post.user.firstName} description  = {post.description} />
+            )
+        }
 
 
         if(isLoggedIn){
