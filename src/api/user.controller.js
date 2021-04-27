@@ -151,7 +151,6 @@ exports.login = function(req, res, next) {
     });
 }
 
-
 //Middleware for authentication 
 exports.requireAuth = (req,res,next) => {
     let user = req.session.user;

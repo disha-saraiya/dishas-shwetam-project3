@@ -1,16 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import '../App.css'; 
-import { Navbar, Nav } from 'react-bootstrap';
-import {userLogin, userLoginError} from '../actions'; 
-import {useSelector, useDispatch} from 'react-redux'; 
-import { connect } from 'react-redux';
-
+import { Navbar, Nav, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 function Navigation(props){
 
-    const dispatch = useDispatch(); 
+    const [isLoggedIn, setIsLoggedIn] = useState(false); 
+    
+    useEffect(() => {
+        //Use to check whether the user is logged in or not, when they go to create a new post. 
+        axios.post('/api/authorize').then((response) => {
+            console.log(response); 
+            setIsLoggedIn(true); 
+        }).catch((err) => {
+            console.log(err);
+            setIsLoggedIn(false); 
+        })
+    }, [])
 
-    if(!props.isUserLoggedIn){
+    const handleLogout = (e) => {
+        e.preventDefault(); 
+
+        axios.post('/api/logout').then(res => {
+            console.log(res); 
+            setIsLoggedIn(false); 
+        }).catch(err => {
+            console.log(err); 
+        })
+    }   
+
+if(isLoggedIn){
     return(
         <div className = "navigation">
             <div className="row">
@@ -26,6 +45,7 @@ function Navigation(props){
                         <Nav.Link href="/signup">Signup</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
+                    <Button onClick = {(e) => handleLogout(e)}> Logout </Button>
     </Navbar>
     </div>
     </div>
@@ -33,43 +53,26 @@ function Navigation(props){
 )
 }
 
+//If user is not logged in (default) 
 return(
     <div className = "navigation">
-            <div className="row">
-                <div className = "col-md-12">            
-                <Navbar collapseOnSelect sticky="top" variant = "light" expand="lg">
-                    <Navbar.Brand href="/">{props.user.firstName}'s Wellness Forum</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                    <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/new">New</Nav.Link>
-                        <Nav.Link href="/login">Login</Nav.Link>
-                        <Nav.Link href="/signup">Signup</Nav.Link>
-                    </Nav>
-                    </Navbar.Collapse>
-
-    </Navbar>
-    </div>
-    </div>
-    </div>
+        <div className="row">
+            <div className = "col-md-12">            
+            <Navbar collapseOnSelect sticky="top" variant = "light" expand="lg">
+                <Navbar.Brand href="/">The Wellness Forum</Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="mr-auto">
+                    <Nav.Link href="/">Home</Nav.Link>
+                    <Nav.Link href="/new">New</Nav.Link>
+                    <Nav.Link href="/login">Login</Nav.Link>
+                    <Nav.Link href="/signup">Signup</Nav.Link>
+                </Nav>
+                </Navbar.Collapse>
+</Navbar>
+</div>
+</div>
+</div>
 )
-
 }
-
-let mapStateToProps =  function (state, props){ 
-    console.log(state); 
-    return{
-        isUserLoggedIn: state.authReducer.isUserLoggedIn, 
-        user: state.authReducer.user
-    }
-}
-
-let mapDispatchToProps = function(dispatch, props){
-    return{
-        dispatch: dispatch, 
-        userLogin, userLoginError
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation); 
+export default Navigation; 
