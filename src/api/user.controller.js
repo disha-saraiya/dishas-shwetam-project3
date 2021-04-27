@@ -108,6 +108,7 @@ exports.removeUser = function(req, res, next) {
 
 
 
+// GET /logout
 exports.logout = function(req, res, next) {
     if (req.session!==null) {
       // delete session object
@@ -149,13 +150,24 @@ exports.login = function(req, res, next) {
         }
     });
 }
-      
-  exports.requireAuth = (req,res,next) => {
+
+
+//Middleware for authentication 
+exports.requireAuth = (req,res,next) => {
     let user = req.session.user;
     console.log(req.session);
     console.log(req.session.user);
     if(!user){
-      return res.status(403).json({message : 'You Need to Be Logged in to do this. Access Denied '});
+      return res.status(403).json({message : 'Forbidden for further use'});
     }
     next();
-  }
+}
+
+//Function to check whether user has logged in before rendering certain pages. 
+exports.isAuth = (req, res) => {
+    if(req.session.user){
+        return res.status(200).json({message: 'Authorized'})
+    }    
+    return res.status(403).json({message: 'Unauthorized'})
+}
+

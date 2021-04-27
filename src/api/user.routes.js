@@ -21,4 +21,5 @@ module.exports = function(router) {
 
     router.post('/login',Users.login);
     router.post('/logout', Users.logout)
+    router.post('/authorize', Users.isAuth)
 }

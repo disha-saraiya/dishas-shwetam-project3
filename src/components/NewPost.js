@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Form, Button} from 'react-bootstrap'; 
 import '../App.css'; 
 
@@ -8,7 +8,20 @@ function NewPost(){
         //Holds they key pair value for each of our form fields.
         const [form, setForm] = useState({}); 
         const [errors, setErrors] = useState({});
+        const [isLoggedIn, setIsLoggedIn] = useState(false); 
     
+        useEffect(() => {
+            //Use to check whether the user is logged in or not, when they go to create a new post. 
+            axios.post('/api/authorize').then((response) => {
+                console.log(response); 
+                setIsLoggedIn(true); 
+            }).catch((err) => {
+                console.log(err);
+                setIsLoggedIn(false); 
+            })
+        }, [])
+
+
         //Function to update state of the form
         const setField = (field, value) => {
             setForm({
@@ -58,15 +71,19 @@ function NewPost(){
                     description: form.description
                 }).then(function(res) {
                     console.log(res);
+                    alert('Post created successfully.');
+                    //setIsLoggedIn(true); 
                 }).catch(function(error){
                     console.log(error); 
+                    alert('You need to be logged in to create a post!')
+                    //setIsLoggedIn(false); 
                 })
             }
         } 
 
 
-        
-    return(
+        if(isLoggedIn){
+        return(
         <div className = "home_container">
            <div className = "new_post_container">
             <h3> Create a new post </h3>
@@ -93,10 +110,6 @@ function NewPost(){
                 onChange = {e => setField('url', e.target.value)} isInvalid = {!!errors.content} />
                 <Form.Control.Feedback type = "invalid"> {errors.content} </Form.Control.Feedback>
             </Form.Group>
-
-
-
-
             <Button variant="primary" type="submit" onClick = {e => handleSubmit(e)}>
                 Post
             </Button>
@@ -104,6 +117,11 @@ function NewPost(){
            </div>
         </div>
         )
+        
+    }
+
+    return(<h2> Please login to continue </h2>)
 }
+
 
 export default NewPost; 
