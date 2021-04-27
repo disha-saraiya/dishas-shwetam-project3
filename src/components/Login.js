@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import '../App.css'; 
-import Home from './Home';
 import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import Axios from 'axios'; 
 import {userLogin, userLoginError} from '../actions'; 
-import {useSelector, useDispatch} from 'react-redux'; 
+import {useDispatch} from 'react-redux'; 
 
 
 
@@ -15,7 +14,7 @@ function Login(props){
     const [form, setForm] = useState({}); 
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch(); 
-    const [isLoggedIn, setIsLoggedIn] = useState({});
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
     //Function to update state of the form
@@ -29,7 +28,6 @@ function Login(props){
                 ...errors,
                 [field]: null
         })
-
     }
 
     const findFormErrors = () => {
@@ -51,22 +49,16 @@ function Login(props){
             setErrors(newErrors)
             
         }else{
-            //TODO: write form submission to API logic here
-            alert('Form is correct, submitting to API');   
-            console.log(form); 
-            
             Axios.post('/api/login', form).then(function(response) {
-                console.log(response);
-                dispatch(userLogin(response.data)); 
+                setIsLoggedIn(true);  
             }).catch(function(error){
-                console.log(error); 
-                //Dispatch the action to indicate an error in login. 
-                dispatch(userLoginError()); 
+                setIsLoggedIn(false); 
+                alert('Could not log in. Please check your credentials!') 
             });
         }
     }
     
-    if(props.isUserLoggedIn){
+    if(isLoggedIn){
         return(
             <Redirect to= '/'></Redirect>
         )
@@ -103,19 +95,4 @@ function Login(props){
         )
 }
 
-let mapStateToProps =  function (state, props){ 
-    console.log(state); 
-    return{
-        isUserLoggedIn: state.authReducer.isUserLoggedIn, 
-        user: state.authReducer.user
-    }
-}
-
-let mapDispatchToProps = function(dispatch, props){
-    return{
-        dispatch: dispatch, 
-        userLogin, userLoginError
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login); 
+export default Login; 

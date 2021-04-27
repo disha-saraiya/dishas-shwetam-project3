@@ -3,7 +3,7 @@ import '../App.css';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import axios from 'axios';
 
-function Navigation(props){
+function Navigation(){
 
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
     
@@ -20,7 +20,6 @@ function Navigation(props){
 
     const handleLogout = (e) => {
         e.preventDefault(); 
-
         axios.post('/api/logout').then(res => {
             console.log(res); 
             setIsLoggedIn(false); 
@@ -41,8 +40,6 @@ if(isLoggedIn){
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/new">New</Nav.Link>
-                        <Nav.Link href="/login">Login</Nav.Link>
-                        <Nav.Link href="/signup">Signup</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                     <Button onClick = {(e) => handleLogout(e)}> Logout </Button>

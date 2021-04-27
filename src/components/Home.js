@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import Post from './Post';
-
 import Axios from 'axios'; 
 
 
@@ -27,7 +26,7 @@ return(
      {allPosts.map((post) => {
        return(
          <div>
-         <Post postTitle = {post.title} content = {post.description} username = "username"/>
+         <Post post = {post} postTitle = {post.title} username = {post.user.firstName} />
          </div>
        ) 
      })} 

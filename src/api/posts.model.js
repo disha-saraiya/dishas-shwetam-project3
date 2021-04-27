@@ -9,7 +9,7 @@ var PostsSchema = new Schema({
     description: String, 
     isHidden: Boolean, 
     isReported: Boolean, 
-    userId: {type: mongoose.Schema.Types.ObjectId, ref: 'UserSchema'}, 
+    user: Object,
     comments:[{commentId: {type: mongoose.Schema.Types.ObjectId, ref: 'CommentsSchema'}}]
 }, {collection: 'posts'}); 
 

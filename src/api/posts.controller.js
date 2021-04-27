@@ -2,12 +2,13 @@ var Posts = require('./posts.dao');
 
 
 exports.createPost = function (req, res, next) {
+    console.log(req.session.user._id); 
     var post = {
         title: req.body.title, 
         description: req.body.description, 
+        user: req.session.user,
         isHidden: false, 
-        isReported: false, 
-        userId: req.body.userId
+        isReported: false
     };
 
     Posts.create(post, function(err, post) {

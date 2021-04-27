@@ -8,7 +8,7 @@ module.exports = function(router) {
     router.get('/get/:name', Users.getUser);
     router.put('/update/:id', Users.updateUser);
     router.delete('/remove/:id', Users.removeUser);
-    router.post('/posts/create',Users.requireAuth, Posts.createPost);
+    router.post('/posts/create', Users.requireAuth , Posts.createPost);
     router.get('/posts/get', Posts.getPosts);
     router.get('/posts/get/:name', Posts.getPost);
     router.put('/posts/update/:id', Posts.updatePost);

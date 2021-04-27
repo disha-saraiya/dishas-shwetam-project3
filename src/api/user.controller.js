@@ -4,7 +4,7 @@ var bcrypt = require('bcrypt');
 
 exports.createUser = function (req, res, next) {
     var user = {
-        username: req.body.username,
+        userName: req.body.username,
         emailId: req.body.emailId,
         password:req.body.password,
         firstName: req.body.firstName, 
@@ -167,6 +167,6 @@ exports.isAuth = (req, res) => {
     if(req.session.user){
         return res.status(200).json({message: 'Authorized'})
     }    
-    return res.status(403).json({message: 'Unauthorized'})
+    return res.status(401).json({message: 'Unauthorized'})
 }
 
