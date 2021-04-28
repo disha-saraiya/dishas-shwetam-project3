@@ -1,24 +1,28 @@
 var Comments = require('./comments.dao');
+var Posts = require('./posts.dao');
 
 exports.createComment = function (req, res, next) {
+    // https://stackoverflow.com/questions/26156687/mongoose-find-update-subdocument
     var comment = {
        userId: req.body.userId,
        content: req.body.content, 
        postId: req.body.postId
     };
-
     Comments.create(comment, function(err, comment) {
         if(err) {
             res.json({
                 error : err
             })
+        }else{
+            Posts.findOneAndUpdate({"_id": req.body.postId}, {"$push": {comments: comment}},   function(err,doc) {
+                next(); 
+            });
+            return res.status(200).json(comment); 
         }
-        res.json({
-            message : "Comments created successfully"
-        })
     })
+    
 }
-
+        
 exports.getComments = function(req, res, next) {
     Comments.get({}, function(err, comments) {
         if(err) {
@@ -50,7 +54,7 @@ exports.updateComment = function(req, res, next) {
         userId:req.body.userId,
         content:req.body.content
     }
-    Comments.update({_id: req.params.id}, comment, function(err, comment) {
+    Comments.updateOne({_id: req.params.id}, comment, function(err, comment) {
         if(err) {
             res.json({
                 error : err
@@ -74,3 +78,4 @@ exports.removeComment = function(req, res, next) {
         })
     })
 }
+

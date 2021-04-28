@@ -10,14 +10,16 @@ module.exports = function(router) {
     router.delete('/remove/:id', Users.removeUser);
     router.post('/posts/create', Users.requireAuth , Posts.createPost);
     router.get('/posts/get', Posts.getPosts);
-    router.get('/posts/get/:name', Posts.getPost);
-    router.put('/posts/update/:id', Posts.updatePost);
-    router.delete('/posts/remove/:id', Posts.removePost);
+    router.get('/posts/get/:name',Users.requireAuth, Posts.getPost);
+    router.put('/posts/update/:id', Users.requireAuth, Posts.updatePost);
+    router.delete('/posts/remove/:id', Users.requireAuth, Posts.removePost);
+    router.put('/posts/addComment/:postId', Users.requireAuth, Posts.updatePost);
+    router.get('/posts/comments/:postId', Users.requireAuth, Posts.getPostComments);
     router.post('/comments/create', Users.requireAuth, Comments.createComment);
-    router.get('/comments/get', Comments.getComments);
-    router.get('/comments/get/:name', Comments.getComment);
-    router.put('/comments/update/:id', Comments.updateComment);
-    router.delete('/comments/remove/:id', Comments.removeComment);
+    router.get('/comments/get', Users.requireAuth, Comments.getComments);
+    router.get('/comments/get/:name', Users.requireAuth, Comments.getComment);
+    router.put('/comments/update/:id', Users.requireAuth, Comments.updateComment);
+    router.delete('/comments/remove/:id', Users.requireAuth, Comments.removeComment);
 
     router.post('/login',Users.login);
     router.post('/logout', Users.logout)

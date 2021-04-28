@@ -20,7 +20,7 @@ function Post(props){
         return(
             <PostPage postTitle = {props.postTitle} createdAt = {props.post.createdAt}
             username = {props.username} description  = {props.post.description} user = {props.post.user} 
-            postId = {props.post._id} />
+            postId = {props.post._id} comments = {props.post.comments} />
         )
     }
             

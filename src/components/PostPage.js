@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import {Button, Form} from 'react-bootstrap';
-import { Redirect } from 'react-router';
 import axios from 'axios'; 
 
 
@@ -9,6 +8,9 @@ function PostPage(props){
 
     const [comment, setComment] = useState(false); 
     const [commentContent, setCommentContent] = useState("");
+    
+
+    var commentsArray = props.comments; 
 
     const handleComment = e => {
         e.preventDefault(); 
@@ -25,14 +27,15 @@ function PostPage(props){
             postId: props.postId,
         }).then(res => {
             console.log(res); 
+            commentsArray.push(res.data);
+            console.log(commentsArray);  
         })
+
+
     }
-
-
 
     return(
         <div> 
-        Here are the details of the post  
         <div className = "post_details">
             <h2> {props.postTitle}</h2>
             <h2> {moment(props.createdAt).format('MMMM Do YYYY')}</h2>
@@ -54,6 +57,12 @@ function PostPage(props){
             <Button onClick = {e => handleSubmitComment(e)}> submit comment </Button>
             </div>
             }
+            {commentsArray.map((comment) => {
+                return(
+                    <div>{comment.content}</div>
+                )
+            })
+        }
         </div>
         </div>
         )

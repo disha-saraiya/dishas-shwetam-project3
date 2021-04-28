@@ -10,7 +10,7 @@ var PostsSchema = new Schema({
     isHidden: Boolean, 
     isReported: Boolean, 
     user: Object,
-    comments:[{commentId: {type: mongoose.Schema.Types.ObjectId, ref: 'CommentsSchema'}}]
+    comments:[]
 }, {collection: 'posts'}); 
 
 module.exports = PostsSchema;

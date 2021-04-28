@@ -50,23 +50,27 @@ exports.getPost = function(req, res, next) {
     })
 }
 
+// exports.addCommentToPost = function(req, res, next) {
+//     var commentId = req.body.commentId; 
+//     var postId = req.params.postId; 
+
+//     Posts.updateComment((postId, commentId), function(err, post){
+
+//     })
+//     return res.status(200).json({message: 'comment added'})
+
+// }
+
 exports.updatePost = function(req, res, next) {
-    var post = {
-        title: req.body.title, 
-        description: req.body.description, 
-        isHidden: false, 
-        isReported: false, 
-        userId: req.body.userId,
-//commentId:req.body.commentId;
-   }
-    Posts.update({_id: req.params.id}, post, function(err, post) {
+    Posts.updateComment(req.params.postId, req.body.commentId , function(err, post) {
         if(err) {
             res.json({
                 error : err
             })
         }
         res.json({
-            message : "Post updated successfully"
+            message : "Post updated successfully",
+            post:post
         })
     })
 }
@@ -82,4 +86,16 @@ exports.removePost = function(req, res, next) {
             message : "Post deleted successfully"
         })
     })
+}
+
+exports.getPostComments = function(req, res){
+    Posts.findOne({"_id": req.params.postId}, function(err, post){
+        console.log(post); 
+        if(err){
+            res.status(404).json({err: "No comments found for this post"})
+        }
+        res.status(200).json({
+            comments : post.comments, 
+        })
+    }) 
 }
