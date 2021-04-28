@@ -17,7 +17,7 @@ PostsSchema.statics = {
 
     delete: function(query, cb) {
         this.findOneAndDelete(query,cb);
-    }
+    }, 
 }
 
 var postsModel = mongoose.model('Posts', PostsSchema);

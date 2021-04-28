@@ -32,7 +32,7 @@ function Post(props){
             <Card.Body>
             <Card.Title><Button type = "submit" onClick = {(e) => handlePostOpen(e)} >
                 {props.postTitle} </Button> </Card.Title>
-            <Button> 10 Comments </Button>
+            <Button>{props.post.comments.length} Comments </Button>
             </Card.Body>
             <Card.Footer> Posted by {props.username} </Card.Footer> 
             </Card>

@@ -42,3 +42,9 @@
   margin-top: 8em; 
   text-align: center;
 }
+
+.comments_container{
+  margin: 10px; 
+  border: 1px solid blue; 
+  background-color: lightblue
+}

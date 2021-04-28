@@ -11,7 +11,6 @@ function NewPost(){
         const [errors, setErrors] = useState({});
         const [isLoggedIn, setIsLoggedIn] = useState(false); 
         const [post, setPost] = useState(null); 
-        //const [postSuccess, setPostSuccess] = useState(false); 
     
         useEffect(() => {
             //Use to check whether the user is logged in or not, when they go to create a new post. 

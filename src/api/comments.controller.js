@@ -14,7 +14,8 @@ exports.createComment = function (req, res, next) {
                 error : err
             })
         }else{
-            Posts.findOneAndUpdate({"_id": req.body.postId}, {"$push": {comments: comment}},   function(err,doc) {
+            Posts.findOneAndUpdate({"_id": req.body.postId}, {"$push": {comments: comment}},
+               function(err,doc) {
                 next(); 
             });
             return res.status(200).json(comment); 
@@ -50,32 +51,59 @@ exports.getComment = function(req, res, next) {
 }
 
 exports.updateComment = function(req, res, next) {
-    var comment = {
-        userId:req.body.userId,
-        content:req.body.content
-    }
-    Comments.updateOne({_id: req.params.id}, comment, function(err, comment) {
+    var newComment = {
+        _id: req.params.commentId,
+        content: req.body.content, 
+    } 
+    Comments.findOneAndUpdate({_id: req.params.commentId}, newComment, function(err, comment) {
         if(err) {
             res.json({
                 error : err
             })
+        }else{
+            newComment = {
+                _id: comment._id, 
+                content: req.body.content, 
+                createdAt: comment.createdAt, 
+                postId: comment.postId, 
+                userId: comment.userId
+            }
+            
+            // Posts.findOneAndUpdate({"_id": req.params.postId}, 
+            // {"$set": {comments: newComment}}, function(err,doc) {
+            //     next(); 
+            // });
+
+            Posts.updateOne({"_id" : req.params.postId, "comments._id": req.params.commentId}, {"$set": {
+                "comment.$" : newComment
+            }}, function(err){
+                console.log(err); 
+                next(); 
+            }); 
+            return res.status(200).json({
+                message : "comment updated successfully",
+                comment: newComment
+            })
         }
-        res.json({
-            message : "comment updated successfully"
-        })
     })
 }
 
 exports.removeComment = function(req, res, next) {
-    Comments.delete({_id: req.params.id}, function(err, comment) {
+    Comments.delete({_id: req.params.commentId}, function(err, comment) {
         if(err) {
             res.json({
                 error : err
             })
+        }else{
+            Posts.findOneAndUpdate({"_id": req.params.postId}, 
+            {"$pull": {comments: comment}}, function(err,doc) {
+                next(); 
+            });
+            return res.status(200).json({
+                message : "Comment deleted successfully",
+                comment: comment
+            })
         }
-        res.json({
-            message : "Comment deleted successfully"
-        })
     })
 }
 

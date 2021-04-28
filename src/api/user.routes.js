@@ -18,8 +18,8 @@ module.exports = function(router) {
     router.post('/comments/create', Users.requireAuth, Comments.createComment);
     router.get('/comments/get', Users.requireAuth, Comments.getComments);
     router.get('/comments/get/:name', Users.requireAuth, Comments.getComment);
-    router.put('/comments/update/:id', Users.requireAuth, Comments.updateComment);
-    router.delete('/comments/remove/:id', Users.requireAuth, Comments.removeComment);
+    router.put('/comments/update/:postId/:commentId', Users.requireAuth, Comments.updateComment);
+    router.delete('/comments/remove/:postId/:commentId', Users.requireAuth, Comments.removeComment);
 
     router.post('/login',Users.login);
     router.post('/logout', Users.logout)
