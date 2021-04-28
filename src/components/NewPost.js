@@ -3,15 +3,24 @@ import React, {useState, useEffect} from 'react'
 import {Form, Button} from 'react-bootstrap'; 
 import '../App.css'; 
 import PostPage from './PostPage'; 
+import Home from './Home'; 
+import { Redirect } from "react-router-dom";
 
-function NewPost(){
+function NewPost(props){
+    console.log(props); 
+
+    //https://stackoverflow.com/questions/52064303/reactjs-pass-props-with-redirect-component
 
         //Holds they key pair value for each of our form fields.
         const [form, setForm] = useState({}); 
         const [errors, setErrors] = useState({});
         const [isLoggedIn, setIsLoggedIn] = useState(false); 
         const [post, setPost] = useState(null); 
-    
+        const [newPost, isNewPost] = useState(typeof(props.location.state) === 'undefined' ? true : false)
+        const [redirectToHome, setRedirectToHome] = useState(false); 
+
+
+
         useEffect(() => {
             //Use to check whether the user is logged in or not, when they go to create a new post. 
             axios.post('/api/authorize').then((response) => {
@@ -83,15 +92,32 @@ function NewPost(){
             }
         } 
 
-        if(post !== null){
+        const handleEditPost = (e) => {
+            e.preventDefault(); 
+
+            axios.patch(`/api/posts/update/${props.location.state.post._id}`, {
+                title: form.newTitle, 
+                description: form.newDescription
+            }).then(res => {
+                console.log(res); 
+                setRedirectToHome(true); 
+            })
+        }
+
+        if(redirectToHome){
             return(
-                <PostPage postTitle = {post.title} createdAt = {post.createdAt}
-                username = {post.user.firstName} description  = {post.description} />
+                <Redirect to="/"><Home /></Redirect>
             )
         }
 
+        if(post !== null){
+            return(
+                <PostPage postTitle = {post.title} createdAt = {post.createdAt}
+                username = {post.user.firstName} description  = {post.description} user = {post.user} />
+            )
+        }
 
-        if(isLoggedIn){
+        if(isLoggedIn && newPost){
         return(
         <div className = "home_container">
            <div className = "new_post_container">
@@ -123,6 +149,30 @@ function NewPost(){
                 Post
             </Button>
             </Form>
+           </div>
+        </div>
+        )
+    } else if(isLoggedIn && (newPost === false)){
+        return(
+        <div className = "home_container">
+           <div className = "new_post_container">
+            <h3> Edit your post </h3>
+
+            <Form.Group>
+            <Form.Label>New Title</Form.Label>
+            <Form.Control type="text" placeholder= "Edit your title" 
+            onChange = {e => setField('newTitle', e.target.value)}/>
+            </Form.Group>
+
+            <Form.Group controlId = "ControlTextarea">
+                <Form.Label> New Content</Form.Label>
+                <Form.Control as="textarea" rows = {6} placeholder = "Edit your description" 
+                onChange = {e => setField('newDescription', e.target.value)}/>
+            </Form.Group>
+
+            <Button variant="primary" type="submit" onClick = {e => handleEditPost(e)}>
+                Edit Post
+            </Button>
            </div>
         </div>
         )

@@ -8,7 +8,6 @@ import PostPage from './PostPage';
 function Post(props){
 
     const [showPost, setShowPost] = useState(false);
-    const [form, setForm] = useState({}); 
 
 
     const handlePostOpen = (e) => {
@@ -20,7 +19,7 @@ function Post(props){
         return(
             <PostPage postTitle = {props.postTitle} createdAt = {props.post.createdAt}
             username = {props.username} description  = {props.post.description} user = {props.post.user} 
-            postId = {props.post._id} comments = {props.post.comments} />
+            postId = {props.post._id} comments = {props.post.comments} post = {props.post}/>
         )
     }
             

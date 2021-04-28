@@ -26,7 +26,7 @@ function App() {
         <Route exact path = "/"><Home /></Route>
         <Route path = "/login"><Login /></Route>
         <Route path = "/signup"><Signup /></Route>
-        <Route path = "/new"><NewPost /></Route>
+        <Route path = "/new" render = {props => <NewPost {...props} />}></Route>
         <Route path = "/postPage"><PostPage /></Route>
       </Switch>
       </Router>

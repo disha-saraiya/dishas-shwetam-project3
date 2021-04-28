@@ -50,39 +50,50 @@ exports.getPost = function(req, res, next) {
     })
 }
 
-// exports.addCommentToPost = function(req, res, next) {
-//     var commentId = req.body.commentId; 
-//     var postId = req.params.postId; 
 
-//     Posts.updateComment((postId, commentId), function(err, post){
+exports.updatePost = function(req, res, next) { 
+    var post = {
+        title: req.body.title, 
+        description: req.body.description 
+   }
+    // Posts.findOneAndReplace({"_id": req.params.postId}, post, next).then(newPost => {
+    //     if(!newPost) {
+    //         res.status(404).json({
+    //             error : "No such post found"
+    //         })
+    //     }else{
+    //         res.status(200).json({
+    //             message : "Post updated successfully",
+    //             post: newPost
+    //         })
+    //         next()
+    //     }
+    // })
 
-//     })
-//     return res.status(200).json({message: 'comment added'})
-
-// }
-
-exports.updatePost = function(req, res, next) {
-    Posts.updateComment(req.params.postId, req.body.commentId , function(err, post) {
-        if(err) {
-            res.json({
-                error : err
+    Posts.findOneAndUpdate({"_id": req.params.postId}, {"title": req.body.title, 
+        "description": req.body.description }, function(error, response){
+        console.log(post); 
+        if(error) {
+            res.status(404).json({
+                error : "No such post found"
+            })
+        }else{
+            res.status(200).json({
+                message : "Post updated successfully",
+                post: response
             })
         }
-        res.json({
-            message : "Post updated successfully",
-            post:post
-        })
     })
 }
 
 exports.removePost = function(req, res, next) {
     Posts.delete({_id: req.params.id}, function(err, post) {
         if(err) {
-            res.json({
-                error : err
+            res.status(404).json({
+                error : "Post not found"
             })
         }
-        res.json({
+        res.status(200).json({
             message : "Post deleted successfully"
         })
     })
