@@ -62,7 +62,12 @@ function PostPage(props){
         var indexOfComment = commentsArray.findIndex(comment => comment._id === commentId);
 
         axios.delete(`/api/comments/remove/${props.postId}/${commentId}`).then(res => {
-            setCommentsArray([commentsArray.splice(indexOfComment,1)]);  
+            let testcommentArray = commentsArray;
+            testcommentArray.splice(indexOfComment,1);
+            console.log(testcommentArray);
+
+            setCommentsArray(testcommentArray);  
+            //console.log(res);
         })
     }
 
@@ -171,6 +176,7 @@ function PostPage(props){
         
             {commentsArray.map((comment) => {
                 return(
+                    <div key = {comment._id}>
                     <div className = "comments_container">
                     <div key = {comment._id}>{comment.content}</div>
                     <button onClick = {e => handleEditComment(e)}>edit</button>
@@ -185,6 +191,7 @@ function PostPage(props){
                         </div>
                     } */}
                     <button onClick = {e => handleDeleteComment(e, comment._id)}>delete</button>
+                    </div>
                     </div>
                     )
             })
@@ -218,6 +225,7 @@ function PostPage(props){
             
                 {commentsArray.map((comment) => {
                     return(
+                        <div key = {comment._id}>
                         <div className = "comments_container">
                         <div key = {comment._id}>
                             {comment.content}
@@ -234,6 +242,7 @@ function PostPage(props){
                             <Button onClick = {e => handleSubmitEditedComment(e, comment._id)}> edit comment </Button>
                             </div>
                         } */}
+        </div>
         </div>
         )
         })

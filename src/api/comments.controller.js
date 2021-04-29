@@ -99,6 +99,7 @@ exports.removeComment = function(req, res, next) {
             {"$pull": {comments: comment}}, function(err,doc) {
                 next(); 
             });
+            console.log(comment);
             return res.status(200).json({
                 message : "Comment deleted successfully",
                 comment: comment
