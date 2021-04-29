@@ -157,11 +157,11 @@ function PostPage(props){
             <br /> 
 
             {comment && 
-            <div>
+            <div className = "comment_box">
             <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Comment here</Form.Label>
             <br />
-            <Form.Control className = "comment_box" as="textarea" rows={2} 
+            <Form.Control as="textarea" rows={2} 
             onChange = {e => setCommentContent(e.target.value)} />
             </Form.Group>
             <Button onClick = {e => handleSubmitComment(e)}> submit comment </Button>
@@ -195,52 +195,53 @@ function PostPage(props){
 
     //The user who has created the post has logged in 
     return(
-    <div> 
-    <Button onClick = {e => handleEditPost(e)}> Edit Post </Button>
-    <Button onClick = {e => handleDeletePost(e, props.postId, props.post)}> Delete Post </Button>
-    <div className = "post_details">
-        <h2> {props.postTitle}</h2>
-        <h2> {moment(props.createdAt).format('MMMM Do YYYY')}</h2>
-        <h2> Posted by : {props.username} </h2>
-        <p> {props.description} </p>
-        <Button> Like </Button>
-        <Button onClick = {e => handleComment(e)}> Comment </Button>
-        <br />
-        <br /> 
+        <div className = "post_details"> 
+        
+            <button onClick = {e => handleEditPost(e)}> Edit Post </button>
+            <button onClick = {e => handleDeletePost(e, props.postId, props.post)}> Delete Post </button>
+            
+                <h2> {props.postTitle}</h2>
+                <h2> {moment(props.createdAt).format('MMMM Do YYYY')}</h2>
+                <h2> Posted by : {props.username} </h2>
+                <p> {props.description} </p>
+                <button> Like </button>
+                <button onClick = {e => handleComment(e)}> Comment </button>
+                <br />
+                <br /> 
 
-        {comment && 
-        <div>
-        <Form.Group controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Comment here</Form.Label>
-        <Form.Control as="textarea" rows={2} 
-        onChange = {e => setCommentContent(e.target.value)} />
-        </Form.Group>
-        <Button onClick = {e => handleSubmitComment(e)}> submit comment </Button>
-        </div>
-        }
-    
-        {commentsArray.map((comment) => {
-            return(
-                <div className = "comments_container">
-                <div key = {comment._id}>{comment.content}</div>
-                <Button onClick = {e => handleEditComment(e)}>edit</Button>
-                {/* {editComment && 
-                    <div>
-                    <Form.Group controlId="exampleForm.ControlTextarea1">
-                    <Form.Label>Edit comment</Form.Label>
-                    <Form.Control as="textarea" rows={1} 
-                    onChange = {e => setCommentContent(e.target.value)} />
-                    </Form.Group>
-                    <Button onClick = {e => handleSubmitEditedComment(e, comment._id)}> edit comment </Button>
-                    </div>
-                } */}
-                <Button onClick = {e => handleDeleteComment(e, comment._id)}>delete</Button>
+                {comment && 
+                <div className = "comment_box">
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                <Form.Label>Comment here</Form.Label>
+                <Form.Control as="textarea" rows={2} 
+                onChange = {e => setCommentContent(e.target.value)} />
+                </Form.Group>
+                <button onClick = {e => handleSubmitComment(e)}> submit comment </button>
                 </div>
-                )
+                }
+            
+                {commentsArray.map((comment) => {
+                    return(
+                        <div className = "comments_container">
+                        <div key = {comment._id}>{comment.content}</div>
+                        <button onClick = {e => handleEditComment(e)}>edit</button>
+                        {/* {editComment && 
+                            <div>
+                            <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Edit comment</Form.Label>
+                            <Form.Control as="textarea" rows={1} 
+                            onChange = {e => setCommentContent(e.target.value)} />
+                            </Form.Group>
+                            <Button onClick = {e => handleSubmitEditedComment(e, comment._id)}> edit comment </Button>
+                            </div>
+                        } */}
+                        <button onClick = {e => handleDeleteComment(e, comment._id)}>delete</button>
+        </div>
+        )
         })
         }
     </div>
-    </div>
+    
     )
 
 
