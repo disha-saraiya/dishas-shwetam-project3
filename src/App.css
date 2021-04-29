@@ -66,15 +66,6 @@
   text-align: center;
 }
 
-.comments_container {
-  margin: 10px;
-  border: 1px solid blue;
-  background-color: lightblue;
-}
-
-.post_button {
-  color: black;
-}
 
 .post_details {
   text-align: center;
@@ -103,6 +94,24 @@
   width: 30%;
   margin: auto;
 }
+
+.post_button{
+  margin: 10px;
+  margin-bottom: 0;  
+  border: 0px; 
+  background-color: #7bf7ab;
+  border-radius: 10px; 
+}
+
+.login_button{
+  margin: 10px; 
+  border: 0px; 
+  background-color: #c1d8ca;
+  border-radius: 10px; 
+  font-size: 1.2em;
+
+}
+
 .signup_container {
   display: flex;
   flex-direction: column;

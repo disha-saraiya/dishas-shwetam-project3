@@ -68,7 +68,8 @@ function Login(props){
         <div className = "home_container">
 
             <div id="login" className = "login_container">
-            <h3> Login to The Wellness Forum </h3>
+            <h3> Login to The Wellness Forum </h3>  
+            <br />
 
             
             <Form.Group controlId="formBasicEmail">
@@ -87,9 +88,9 @@ function Login(props){
             </Form.Group>
 
 
-            <Button variant="primary" type="submit" onClick = {(e) => handleSubmit(e)}>
+            <button className = "login_button" type="submit" onClick = {(e) => handleSubmit(e)}>
                 Login
-            </Button>
+            </button>
         </div>
         </div>
         )

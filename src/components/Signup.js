@@ -128,9 +128,9 @@ function Signup(){
             </Form.Group>
 
 
-            <Button type="submit" onClick = {(e) => handleSubmit(e)}>
+            <button className = "login_button" onClick = {(e) => handleSubmit(e)}>
                 Sign me up!
-            </Button>
+            </button>
         </div>
         </div>
         )

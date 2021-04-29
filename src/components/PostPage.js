@@ -150,9 +150,9 @@ function PostPage(props){
         <div className = "post_details">
             <h2 className = "post_title"> {props.postTitle}</h2>
             <h5>Posted on {moment(props.createdAt).format('MMMM Do YYYY')}, by {props.username} </h5>
-            <p> {props.description} </p>
+            <p className = "description" > {props.description} </p>
             <br />
-            <Button onClick = {e => handleComment(e)}> Comment </Button>
+            <button className = "post_button" onClick = {e => handleComment(e)}> Comment </button>
             <br />
             <br /> 
 
@@ -164,7 +164,7 @@ function PostPage(props){
             <Form.Control as="textarea" rows={2} 
             onChange = {e => setCommentContent(e.target.value)} />
             </Form.Group>
-            <Button onClick = {e => handleSubmitComment(e)}> submit comment </Button>
+            <button className = "post_button" onClick = {e => handleSubmitComment(e)}> submit comment </button>
             <br />
             </div>
             }
@@ -173,7 +173,7 @@ function PostPage(props){
                 return(
                     <div className = "comments_container">
                     <div key = {comment._id}>{comment.content}</div>
-                    <Button onClick = {e => handleEditComment(e)}>edit</Button>
+                    <button onClick = {e => handleEditComment(e)}>edit</button>
                     {/* {editComment && 
                         <div>
                         <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -184,7 +184,7 @@ function PostPage(props){
                         <Button onClick = {e => handleSubmitEditedComment(e, comment._id)}> edit comment </Button>
                         </div>
                     } */}
-                    <Button onClick = {e => handleDeleteComment(e, comment._id)}>delete</Button>
+                    <button onClick = {e => handleDeleteComment(e, comment._id)}>delete</button>
                     </div>
                     )
             })
@@ -197,34 +197,33 @@ function PostPage(props){
     return(
         <div className = "post_details"> 
         
-            <button onClick = {e => handleEditPost(e)}> Edit Post </button>
-            <button onClick = {e => handleDeletePost(e, props.postId, props.post)}> Delete Post </button>
-            
-                <h2> {props.postTitle}</h2>
-                <h2> {moment(props.createdAt).format('MMMM Do YYYY')}</h2>
-                <h2> Posted by : {props.username} </h2>
-                <p> {props.description} </p>
-                <button> Like </button>
-                <button onClick = {e => handleComment(e)}> Comment </button>
+            <button className = "post_button" onClick = {e => handleEditPost(e)}> Edit Post </button>
+            <button className= "post_button" onClick = {e => handleDeletePost(e, props.postId, props.post)}> Delete Post </button>
+                <h2 className = "post_title"> {props.postTitle}</h2>
+                <h5>Posted on {moment(props.createdAt).format('MMMM Do YYYY')}, by {props.username} </h5>
+                <p className = "description"> {props.description} </p>
+                <button className = "post_button" onClick = {e => handleComment(e)}> Comment </button>
+
                 <br />
                 <br /> 
-
                 {comment && 
                 <div className = "comment_box">
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                <Form.Label>Comment here</Form.Label>
                 <Form.Control as="textarea" rows={2} 
                 onChange = {e => setCommentContent(e.target.value)} />
+                <button className = "post_button" onClick = {e => handleSubmitComment(e)}> submit comment </button>
                 </Form.Group>
-                <button onClick = {e => handleSubmitComment(e)}> submit comment </button>
                 </div>
                 }
             
                 {commentsArray.map((comment) => {
                     return(
                         <div className = "comments_container">
-                        <div key = {comment._id}>{comment.content}</div>
-                        <button onClick = {e => handleEditComment(e)}>edit</button>
+                        <div key = {comment._id}>
+                            {comment.content}
+                            <button onClick = {e => handleEditComment(e)}>edit</button>
+                            <button onClick = {e => handleDeleteComment(e, comment._id)}>delete</button>
+                        </div>
                         {/* {editComment && 
                             <div>
                             <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -235,7 +234,6 @@ function PostPage(props){
                             <Button onClick = {e => handleSubmitEditedComment(e, comment._id)}> edit comment </Button>
                             </div>
                         } */}
-                        <button onClick = {e => handleDeleteComment(e, comment._id)}>delete</button>
         </div>
         )
         })
