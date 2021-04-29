@@ -17,19 +17,15 @@ useEffect(() => {
 }, [])
 
 return(
-  <div className = "home_container">
-  <div className = "posts_container">
-
+  <div>
      {allPosts.map((post) => {
        return(
-         <div>
+         <div className = "home_container">
          <Post post = {post} postTitle = {post.title} username = {post.user.firstName} showPost = {false} />
          </div>
        ) 
      })} 
-
-  </div>
-  </div>   
+ </div>
 )
 }
 export default Home; 

@@ -20,10 +20,28 @@
 .posts_container{
   width: 70%; 
   height: auto; 
+  margin: 20px; 
+  border: 2px solid #5ed3a4; 
+  background-color:  rgb(183, 219, 186, 0.3);
+  border-radius: 15px;  
 }
 
-.post_card{
-  margin: 8px; 
+.posts_container p{
+  padding: 0.5%; 
+}
+
+.posts_container button{
+  border: 0px; 
+  background: inherit; 
+  border-radius: 15px;  
+}
+
+.posts_container h2{
+  padding: 0.4%; 
+}
+
+.posts_container button:hover{
+  box-shadow: rgb(183, 219, 186) 0px 4px 12px;
 }
 
 .new_post_container{
@@ -55,14 +73,31 @@
 
 .post_details{
   text-align: center; 
-  border: 2px solid black; 
-  margin: 5px;   
+  width: 70%; 
+  height: auto; 
+  margin: 20px; 
+  border: 2px solid #5ed3a4; 
+  background-color:  rgb(183, 219, 186, 0.3);
+  border-radius: 15px; 
+}
+
+.notice{
+  margin: 5px; 
+  font-style: italic;
 }
 
 .post_details p{
   margin: 5px; 
 }
 
+.description{
+  text-align: justify; 
+
+}
+
+.comment_box{
+  width: 70%; 
+}
 .signup_container{
   display: flex; 
   flex-direction: column;

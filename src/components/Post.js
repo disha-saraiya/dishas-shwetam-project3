@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import {Card, Button} from 'react-bootstrap'; 
 import '../App.css'
-import moment from 'moment'; 
 import PostPage from './PostPage';
 
 
@@ -22,31 +20,21 @@ function Post(props){
             postId = {props.post._id} comments = {props.post.comments} post = {props.post}/>
         )
     }
-            
-//     return(
-//         <div className = "home_container">
-//         <div className = "posts_container">
-//             <Card bg="light" text="info" className="post_card text-center">
-//             <Card.Header>Posted on {moment(props.post.createdAt).format('MMMM Do YYYY')} </Card.Header>
-//             <Card.Body>
-//             <Card.Title><Button type = "submit" onClick = {(e) => handlePostOpen(e)} >
-//                 {props.postTitle} </Button> </Card.Title>
-//             <Button  type = "submit" onClick = {(e) => handlePostOpen(e)}>
-//                 {props.post.comments.length} Comments </Button>
-//             </Card.Body>
-//             <Card.Footer> Posted by {props.username} </Card.Footer> 
-//             </Card>
-//         </div>
-//         </div>
-// )
+
+    function convertTZ(date, tzString) {
+    date = props.post.createdAt; 
+    var formatDate =  new Date((typeof date === "string" ? new Date(date) : date)
+        .toLocaleString("en-US", {timeZone: tzString}));
+    return formatDate.toLocaleString();   
+}
+
+    var formatDate = convertTZ(convertTZ(props.post.createdAt), Intl.DateTimeFormat().resolvedOptions().timeZone ); 
 
 return(
-    <div className = "home_container">
     <div className = "posts_container">
-        <p> Posted {moment().startOf('day').fromNow()} by {props.username}</p>
+        <p>Posted on {formatDate} by {props.username}</p>
         <h3><button type = "submit" onClick = {(e) => handlePostOpen(e)}>{props.postTitle} </button> </h3>
-        <p><button  type = "submit" onClick = {(e) => handlePostOpen(e)}>{props.post.comments.length} Comments </button> </p>
-    </div>
+        <h5><button  type = "submit" onClick = {(e) => handlePostOpen(e)}>{props.post.comments.length} Comments </button> </h5>
     </div>
 )
 }

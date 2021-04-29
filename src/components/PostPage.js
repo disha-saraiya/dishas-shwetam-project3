@@ -42,9 +42,6 @@ function PostPage(props){
         })
     }, [])
 
-    //console.log(loggedInUser.user._id); 
-    //console.log(props.user._id); 
-
     const handleSubmitComment = e => {
         e.preventDefault(); 
 
@@ -126,16 +123,13 @@ function PostPage(props){
 
     if(!loggedInUser.isLoggedIn){
         return(
-            <div> 
             <div className = "post_details">
                 <h2 className = "post_title"> {props.postTitle}</h2>
                 <h5>Posted on {moment(props.createdAt).format('MMMM Do YYYY')}, by {props.username} </h5>
-                <p> {props.description} </p>
+                <p className = "description"> {props.description} </p>
                 <br />
-                <br /> 
-                <p> Please <a href="/login">login</a> or
+                <p className = "notice">Please <a href="/login">login</a> or
                      <a href = "/signup"> create an account</a> to comment on the post </p>
-                
                 <div> 
                 {(commentsArray.length === 0) ? <p> There are no comments for this post yet </p> : <p> Comments: </p>}
                 {commentsArray.map((comment) => {
@@ -148,16 +142,16 @@ function PostPage(props){
                 }
                 </div>     
             </div>
-            </div>
             )}
 
    if(loggedInUser.user._id !== props.user._id){
     return(
-        <div> 
+         
         <div className = "post_details">
             <h2 className = "post_title"> {props.postTitle}</h2>
             <h5>Posted on {moment(props.createdAt).format('MMMM Do YYYY')}, by {props.username} </h5>
             <p> {props.description} </p>
+            <br />
             <Button onClick = {e => handleComment(e)}> Comment </Button>
             <br />
             <br /> 
@@ -166,10 +160,12 @@ function PostPage(props){
             <div>
             <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Label>Comment here</Form.Label>
-            <Form.Control as="textarea" rows={2} 
+            <br />
+            <Form.Control className = "comment_box" as="textarea" rows={2} 
             onChange = {e => setCommentContent(e.target.value)} />
             </Form.Group>
             <Button onClick = {e => handleSubmitComment(e)}> submit comment </Button>
+            <br />
             </div>
             }
         
@@ -193,7 +189,6 @@ function PostPage(props){
                     )
             })
             }
-        </div>
         </div>
         )
    }
