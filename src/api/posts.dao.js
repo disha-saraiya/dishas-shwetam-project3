@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var PostsSchema = require('./posts.model');
+let mongoose = require('mongoose');
+let PostsSchema = require('./posts.model');
 
 PostsSchema.statics = {
     create : function(data, cb) {
-        var posts = new this(data);
+        let posts = new this(data);
         posts.save(cb);
     },
 
@@ -20,5 +20,5 @@ PostsSchema.statics = {
     }, 
 }
 
-var postsModel = mongoose.model('Posts', PostsSchema);
+let postsModel = mongoose.model('Posts', PostsSchema);
 module.exports = postsModel;

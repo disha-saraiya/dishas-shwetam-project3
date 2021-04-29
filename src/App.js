@@ -20,7 +20,7 @@ function App() {
   return (
     <Provider store={store}>
     <div className="App">
-      <Navigation />
+      {/* <Navigation /> */}
       <Router>
       <Switch>
         <Route exact path = "/"><Home /></Route>

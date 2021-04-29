@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Post from './Post';
 import Axios from 'axios'; 
+import Navigation from './Navigation';
 
 
 function Home(){
@@ -8,7 +9,6 @@ function Home(){
 const [allPosts, setPosts] = useState([]);  
 
 useEffect(() => {
-
   setTimeout(() => {
     Axios.get('http://localhost:3000/api/posts/get').then((res) => {
     setPosts(res.data.posts) 
@@ -18,6 +18,8 @@ useEffect(() => {
 
 return(
   <div>
+  <Navigation /> 
+  <div>
      {allPosts.map((post) => {
        return(
          <div className = "home_container">
@@ -25,6 +27,7 @@ return(
          </div>
        ) 
      })} 
+ </div>
  </div>
 )
 }

@@ -23,12 +23,12 @@ function Post(props){
 
     function convertTZ(date, tzString) {
     date = props.post.createdAt; 
-    var formatDate =  new Date((typeof date === "string" ? new Date(date) : date)
+    let formatDate =  new Date((typeof date === "string" ? new Date(date) : date)
         .toLocaleString("en-US", {timeZone: tzString}));
     return formatDate.toLocaleString();   
 }
 
-    var formatDate = convertTZ(convertTZ(props.post.createdAt), Intl.DateTimeFormat().resolvedOptions().timeZone ); 
+    let formatDate = convertTZ(convertTZ(props.post.createdAt), Intl.DateTimeFormat().resolvedOptions().timeZone ); 
 
 return(
     <div className = "posts_container">

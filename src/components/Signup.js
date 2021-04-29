@@ -3,6 +3,7 @@ import { Row, Col, Form, Button } from 'react-bootstrap';
 import Axios from 'axios'; 
 import { Redirect } from 'react-router';
 import '../App.css'; 
+import Navigation from './Navigation';
 
 
 //https://dev.to/alecgrey/controlled-forms-with-front-and-backend-validations-using-react-bootstrap-5a2
@@ -72,6 +73,8 @@ function Signup(){
     }
 
     return(
+        <div>
+        <Navigation />
         <div className = "signup_container">
             <h3> Welcome to The Wellness Forum </h3>
             <h4> Create an account </h4>
@@ -131,6 +134,7 @@ function Signup(){
             <button className = "login_button" onClick = {(e) => handleSubmit(e)}>
                 Sign me up!
             </button>
+        </div>
         </div>
         </div>
         )

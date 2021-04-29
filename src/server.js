@@ -1,33 +1,35 @@
-var express = require('express');
+let express = require('express');
 const path = require('path');
 
-//var log = require('morgan')('dev');
-var bodyParser = require('body-parser');
+let env = require("dotenv").config()
 
-var cors = require('cors');
-var mongoose = require('mongoose');
+//let log = require('morgan')('dev');
+let bodyParser = require('body-parser');
+
+let cors = require('cors');
+let mongoose = require('mongoose');
 //session maintenance
-var session = require('express-session');
+let session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
 
-var properties = require('./config/properties');
-var db = require('./config/database');
+let properties = require('./config/properties');
+let db = require('./config/database');
 //hero routes
-var herosRoutes = require('./api/user.routes');
+let herosRoutes = require('./api/user.routes');
 const userRoutes = require('./api/user.routes');
 //authentication
 const cookieParser = require('cookie-parser');
 
-var app = express();
+let app = express();
 app.use(cors({origin:'*'})); 
 
 //configure bodyparser
-var bodyParserJSON = bodyParser.json();
-var bodyParserURLEncoded = bodyParser.urlencoded({extended:true});
+let bodyParserJSON = bodyParser.json();
+let bodyParserURLEncoded = bodyParser.urlencoded({extended:true});
 
 //initialise express router
-var router = express.Router();
+let router = express.Router();
 
 // call the database connectivity function
 db();
@@ -71,6 +73,6 @@ res.sendFile(path.join(__dirname, 'build', 'index.html'));
 
 
 // intialise server
-app.listen(properties.PORT);
+app.listen(process.env.PORT || properties.PORT);
 
-app.use(session({secret: 'scented_candle'}));
+app.use(session({secret:process.env.SECRET  || properties.SECRET }));

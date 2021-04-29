@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
+let mongoose = require('mongoose');
+let bcrypt = require('bcrypt');
 
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+let UserSchema = new Schema({
     // mongoose automically gives this an _id attribute of ObjectId
     userName: String, 
     firstName: String, 
@@ -21,7 +21,7 @@ var UserSchema = new Schema({
 
 //hashing a password before saving it to the database
 UserSchema.pre('save', function (next) {
-    var user = this;
+    let user = this;
     bcrypt.hash(user.password, 10, function (err, hash) {
       if (err) {
         return next(err);

@@ -7,15 +7,12 @@ function Navigation(){
 
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
     const [firstName, setFirstName] = useState(""); 
-    
-
-    
+     
     useEffect(() => {
         axios.post('/api/authorize').then((response) => {
             console.log(response); 
             setFirstName(response.data.firstName);
             setIsLoggedIn(true); 
-
         }).catch((err) => {
             console.log(err);
             setIsLoggedIn(false); 

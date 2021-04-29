@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
+let mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
-var CommentsSchema = new Schema({
+let CommentsSchema = new Schema({
     // mongoose automically gives this an _id attribute of ObjectId
    createdAt: { type: Date, default: Date.now }, 
    content: String, 

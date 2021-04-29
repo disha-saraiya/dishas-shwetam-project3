@@ -1,9 +1,9 @@
-var Posts = require('./posts.dao');
+let Posts = require('./posts.dao');
 
 
 exports.createPost = function (req, res, next) {
     console.log(req.session.user._id); 
-    var post = {
+    let post = {
         title: req.body.title, 
         description: req.body.description, 
         user: req.session.user,
@@ -52,24 +52,10 @@ exports.getPost = function(req, res, next) {
 
 
 exports.updatePost = function(req, res, next) { 
-    var post = {
+    let post = {
         title: req.body.title, 
         description: req.body.description 
    }
-    // Posts.findOneAndReplace({"_id": req.params.postId}, post, next).then(newPost => {
-    //     if(!newPost) {
-    //         res.status(404).json({
-    //             error : "No such post found"
-    //         })
-    //     }else{
-    //         res.status(200).json({
-    //             message : "Post updated successfully",
-    //             post: newPost
-    //         })
-    //         next()
-    //     }
-    // })
-
     Posts.findOneAndUpdate({"_id": req.params.postId}, {"title": req.body.title, 
         "description": req.body.description }, function(error, response){
         console.log(post); 

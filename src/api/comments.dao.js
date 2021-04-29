@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');
-var CommentsSchema = require('./comments.model');
+let mongoose = require('mongoose');
+let CommentsSchema = require('./comments.model');
 
 CommentsSchema.statics = {
     create : function(data, cb) {
-        var comments = new this(data);
+        let comments = new this(data);
         comments.save(cb);
     },
 
@@ -24,5 +24,5 @@ CommentsSchema.statics = {
     }
 }
 
-var commentsModel = mongoose.model('Comments', CommentsSchema);
+let commentsModel = mongoose.model('Comments', CommentsSchema);
 module.exports = commentsModel;

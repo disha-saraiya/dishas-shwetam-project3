@@ -1,11 +1,11 @@
-var mongoose = require('mongoose');
-var UserSchema = require('./user.model');
-var bcrypt = require('bcrypt');
+let mongoose = require('mongoose');
+let UserSchema = require('./user.model');
+let bcrypt = require('bcrypt');
 
 
 UserSchema.statics = {
     create : function(data, cb) {
-        var user = new this(data);
+        let user = new this(data);
         user.save(cb);
     },
 
@@ -34,7 +34,7 @@ UserSchema.statics = {
             if(err){
                 return callback(err)
             }else if (!user){
-                var err = new Error('User not found');
+                let err = new Error('User not found');
                 err.status = 401; 
                 return callback(err); 
             }
@@ -51,5 +51,5 @@ UserSchema.statics = {
     }
 }
 
-var userModel = mongoose.model('User', UserSchema);
+let userModel = mongoose.model('User', UserSchema);
 module.exports = userModel;

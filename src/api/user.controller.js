@@ -1,9 +1,8 @@
-var Users = require('./user.dao');
+let Users = require('./user.dao');
 const jwt = require('jsonwebtoken');
-var bcrypt = require('bcrypt');
 
 exports.createUser = function (req, res, next) {
-    var user = {
+    let user = {
         userName: req.body.username,
         emailId: req.body.emailId,
         password:req.body.password,
@@ -46,9 +45,6 @@ exports.getUser = function(req, res, next) {
                 error: err
             })
         }
-        res.cookie({
-            users: jwt.sign({username:users.username},"scented_candle")
-        })
         res.json({
             status:200,
             message:"User logged in successfully",
@@ -59,7 +55,7 @@ exports.getUser = function(req, res, next) {
 }
 
 exports.updateUser = function(req, res, next) {
-    var user = {
+    let user = {
         username: req.body.username,
         emailId: req.body.emailId,
         password:req.body.password,
@@ -126,7 +122,7 @@ exports.login = function(req, res, next) {
 
     return Users.authenticate(email, password, function(error, user){
         if(error || !user){
-            var err = new Error('Please enter the correct email or password.'); 
+            let err = new Error('Please enter the correct email or password.'); 
             err.status = 401; 
             return next(err); 
         }else{

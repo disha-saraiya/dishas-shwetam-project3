@@ -1,17 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import moment from 'moment';
-import {Button, Form} from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import axios from 'axios'; 
 import '../App.css'; 
 import Home from './Home'; 
 import { Redirect } from "react-router-dom";
-import NewPost from './NewPost';
 
 
 function PostPage(props){
 
     const [comment, setComment] = useState(false); 
-    const [editComment, setEditComment] = useState(false); 
     const[loggedInUser, setLoggedInUser] = useState({
         user: null, isLoggedIn: false
     }); 
@@ -59,43 +57,37 @@ function PostPage(props){
     const handleDeleteComment = (e, commentId) => {
         e.preventDefault();     
 
-        var indexOfComment = commentsArray.findIndex(comment => comment._id === commentId);
+        let indexOfComment = commentsArray.findIndex(comment => comment._id === commentId);
 
         axios.delete(`/api/comments/remove/${props.postId}/${commentId}`).then(res => {
-            let testcommentArray = commentsArray;
-            testcommentArray.splice(indexOfComment,1);
-            console.log(testcommentArray);
-
-            setCommentsArray(testcommentArray);  
-            //console.log(res);
+            commentsArray.splice(indexOfComment,1);
+            setCommentsArray([...commentsArray]);  
         })
     }
 
-    const handleEditComment = (e) => {
-        e.preventDefault(); 
-        setEditComment(true);   
-    }
+    // const handleEditComment = (e) => {
+    //     e.preventDefault(); 
+    //     setEditComment(true);   
+    // }
 
 
-    const handleSubmitEditedComment = (e, commentId)=> {
-        e.preventDefault(); 
-        
-        console.log(commentsArray); 
-        var indexOfComment = commentsArray.findIndex(comment => comment._id === commentId);
-        // console.log(indexOfComment)
-        // setCommentsArray([commentsArray.splice(indexOfComment, 1, {content: 'new comment'})])
-        // console.log(commentsArray); 
+    // const handleSubmitEditedComment = (e, commentId)=> {
+    //     e.preventDefault(); 
+    //     console.log(commentsArray); 
+    //     let indexOfComment = commentsArray.findIndex(comment => comment._id === commentId);
+    //     // console.log(indexOfComment)
+    //     // setCommentsArray([commentsArray.splice(indexOfComment, 1, {content: 'new comment'})])
+    //     // console.log(commentsArray); 
 
-        axios.put(`/api/comments/update/${props.postId}/${commentId}`, {
-            content: commentContent
-        }).then(res => {
-            //setCommentsArray([commentsArray.splice(indexOfComment,1) ,res.data.comment])
-            //setCommentsArray([commentsArray.splice(indexOfComment, 1, res.data.comment)])
-            console.log(res)
-        })
-
-        setEditComment(false); 
-    }   
+    //     axios.patch(`/api/comments/update/${props.postId}/${commentId}`, {
+    //         content: commentContent
+    //     }).then(res => {
+    //         //setCommentsArray([commentsArray.splice(indexOfComment,1) ,res.data.comment])
+    //         //setCommentsArray([commentsArray.splice(indexOfComment, 1, res.data.comment)])
+    //         console.log(res)
+    //     })
+    //     setEditComment(false); 
+    // }   
 
     const handleDeletePost = (e, postId) => {
         e.preventDefault(); 
@@ -150,8 +142,7 @@ function PostPage(props){
             )}
 
    if(loggedInUser.user._id !== props.user._id){
-    return(
-         
+    return(     
         <div className = "post_details">
             <h2 className = "post_title"> {props.postTitle}</h2>
             <h5>Posted on {moment(props.createdAt).format('MMMM Do YYYY')}, by {props.username} </h5>
@@ -178,19 +169,10 @@ function PostPage(props){
                 return(
                     <div key = {comment._id}>
                     <div className = "comments_container">
-                    <div key = {comment._id}>{comment.content}</div>
-                    <button onClick = {e => handleEditComment(e)}>edit</button>
-                    {/* {editComment && 
-                        <div>
-                        <Form.Group controlId="exampleForm.ControlTextarea1">
-                        <Form.Label>Edit comment</Form.Label>
-                        <Form.Control as="textarea" rows={1} 
-                        onChange = {e => setCommentContent(e.target.value)} />
-                        </Form.Group>
-                        <Button onClick = {e => handleSubmitEditedComment(e, comment._id)}> edit comment </Button>
-                        </div>
-                    } */}
-                    <button onClick = {e => handleDeleteComment(e, comment._id)}>delete</button>
+                    <span key = {comment._id}>
+                    <p className = "comment_content">{comment.content}</p> 
+                    <button className = "comment_button" onClick = {e => handleDeleteComment(e, comment._id)}> delete </button>
+                    </span>
                     </div>
                     </div>
                     )
@@ -224,34 +206,20 @@ function PostPage(props){
                 }
             
                 {commentsArray.map((comment) => {
-                    return(
-                        <div key = {comment._id}>
-                        <div className = "comments_container">
-                        <div key = {comment._id}>
-                            {comment.content}
-                            <button onClick = {e => handleEditComment(e)}>edit</button>
-                            <button onClick = {e => handleDeleteComment(e, comment._id)}>delete</button>
-                        </div>
-                        {/* {editComment && 
-                            <div>
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                            <Form.Label>Edit comment</Form.Label>
-                            <Form.Control as="textarea" rows={1} 
-                            onChange = {e => setCommentContent(e.target.value)} />
-                            </Form.Group>
-                            <Button onClick = {e => handleSubmitEditedComment(e, comment._id)}> edit comment </Button>
-                            </div>
-                        } */}
-        </div>
+                return(
+                    <div key = {comment._id}>
+                    <div className = "comments_container">
+                    <span key = {comment._id}>
+                    <p className = "comment_content">{comment.content}</p> 
+                    <button className = "comment_button" onClick = {e => handleDeleteComment(e, comment._id)}> delete </button>
+                    </span>
+                    </div>
+                    </div>
+                )
+            })
+            }
         </div>
         )
-        })
-        }
-    </div>
-    
-    )
-
-
 } 
 
 export default PostPage; 

@@ -1,9 +1,9 @@
-var Comments = require('./comments.dao');
-var Posts = require('./posts.dao');
+let Comments = require('./comments.dao');
+let Posts = require('./posts.dao');
 
 exports.createComment = function (req, res, next) {
     // https://stackoverflow.com/questions/26156687/mongoose-find-update-subdocument
-    var comment = {
+    let comment = {
        userId: req.body.userId,
        content: req.body.content, 
        postId: req.body.postId
@@ -51,7 +51,7 @@ exports.getComment = function(req, res, next) {
 }
 
 exports.updateComment = function(req, res, next) {
-    var newComment = {
+    let newComment = {
         _id: req.params.commentId,
         content: req.body.content, 
     } 
@@ -68,25 +68,40 @@ exports.updateComment = function(req, res, next) {
                 postId: comment.postId, 
                 userId: comment.userId
             }
-            
-            // Posts.findOneAndUpdate({"_id": req.params.postId}, 
-            // {"$set": {comments: newComment}}, function(err,doc) {
-            //     next(); 
-            // });
-
-            Posts.updateOne({"_id" : req.params.postId, "comments._id": req.params.commentId}, {"$set": {
-                "comment.$" : newComment
-            }}, function(err){
+            Posts.updateOne({"_id" : req.params.postId, "comments": {
+                "$elemMatch": {"_id": req.params.commentId}
+            }}, {"$set" : {"comments.$.content" : newComment.content}}, function(err, response){
+                if(err){
                 console.log(err); 
                 next(); 
-            }); 
-            return res.status(200).json({
-                message : "comment updated successfully",
-                comment: newComment
-            })
-        }
-    })
-}
+                }else{
+                    console.log(response); 
+                    res.status(200).json({
+                        message : "comment updated successfully",
+                        comment: newComment
+                })
+            }
+            });           
+        }}
+        )}
+
+        //     Posts.findOneAndUpdate({"_id": req.params.postId}, {"title": req.body.title, 
+        //     "description": req.body.description }, function(error, response){
+        //     console.log(post); 
+        //     if(error) {
+        //         res.status(404).json({
+        //             error : "No such post found"
+        //         })
+        //     }else{
+        //         res.status(200).json({
+        //             message : "Post updated successfully",
+        //             post: response
+        //         })
+        //     }
+        // })
+//         }
+//     })
+// }
 
 exports.removeComment = function(req, res, next) {
     Comments.delete({_id: req.params.commentId}, function(err, comment) {

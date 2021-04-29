@@ -1,19 +1,17 @@
 import React, {useState} from 'react';
-import { Form, Button } from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
+import Navigation from './Navigation'; 
 import '../App.css'; 
-import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import Axios from 'axios'; 
-import {userLogin, userLoginError} from '../actions'; 
 import {useDispatch} from 'react-redux'; 
 
 
 
-function Login(props){
+function Login(){
     //Holds they key pair value for each of our form fields.
     const [form, setForm] = useState({}); 
     const [errors, setErrors] = useState({});
-    const dispatch = useDispatch(); 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
@@ -65,6 +63,8 @@ function Login(props){
     }
 
     return(
+        <div>
+        <Navigation /> 
         <div className = "home_container">
 
             <div id="login" className = "login_container">
@@ -91,6 +91,7 @@ function Login(props){
             <button className = "login_button" type="submit" onClick = {(e) => handleSubmit(e)}>
                 Login
             </button>
+        </div>
         </div>
         </div>
         )

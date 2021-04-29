@@ -5,6 +5,7 @@ import '../App.css';
 import PostPage from './PostPage'; 
 import Home from './Home'; 
 import { Redirect } from "react-router-dom";
+import Navigation from './Navigation';
 
 function NewPost(props){
     console.log(props); 
@@ -119,6 +120,8 @@ function NewPost(props){
 
         if(isLoggedIn && newPost){
         return(
+        <div>
+        <Navigation />
         <div className = "home_container">
            <div className = "new_post_container">
             <h3> Create a new post </h3>
@@ -151,9 +154,12 @@ function NewPost(props){
             </Form>
            </div>
         </div>
+        </div>
         )
     } else if(isLoggedIn && (newPost === false)){
         return(
+        <div>
+        <Navigation />
         <div className = "home_container">
            <div className = "new_post_container">
             <h3> Edit your post </h3>
@@ -175,8 +181,8 @@ function NewPost(props){
             </Button>
            </div>
         </div>
+        </div>
         )
-        
     }
 
     return(<h2> Please login to continue </h2>)
