@@ -128,9 +128,9 @@ function PostPage(props){
         return(
             <div> 
             <div className = "post_details">
-                <h2> {props.postTitle}</h2>
-                <h2> {moment(props.createdAt).format('MMMM Do YYYY')}</h2>
-                <h2> Posted by : {props.username} </h2>
+                <h2 className = "post_title"> {props.postTitle}</h2>
+                <h3> Posted on : {moment(props.createdAt).format('MMMM Do YYYY')}</h3>
+                <h5> Posted by : {props.username} </h5>
                 <p> {props.description} </p>
                 <br />
                 <br /> 
@@ -143,11 +143,9 @@ function PostPage(props){
     return(
         <div> 
         <div className = "post_details">
-            <h2> {props.postTitle}</h2>
-            <h2> {moment(props.createdAt).format('MMMM Do YYYY')}</h2>
-            <h2> Posted by : {props.username} </h2>
+            <h2 className = "post_title"> {props.postTitle}</h2>
+            <h5>Posted on {moment(props.createdAt).format('MMMM Do YYYY')}, by {props.username} </h5>
             <p> {props.description} </p>
-            <Button> Like </Button>
             <Button onClick = {e => handleComment(e)}> Comment </Button>
             <br />
             <br /> 

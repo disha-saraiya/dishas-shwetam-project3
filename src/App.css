@@ -48,3 +48,17 @@
   border: 1px solid blue; 
   background-color: lightblue
 }
+
+.post_button{
+  color: black
+}
+
+.post_details{
+  text-align: center; 
+  border: 2px solid black; 
+  margin: 5px;   
+}
+
+.post_details p{
+  margin: 5px; 
+}

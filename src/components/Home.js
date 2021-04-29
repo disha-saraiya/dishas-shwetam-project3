@@ -18,6 +18,7 @@ useEffect(() => {
 
 return(
   <div className = "home_container">
+    
   <div className = "posts_container">
 
      {allPosts.map((post) => {
