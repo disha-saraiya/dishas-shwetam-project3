@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import Axios from 'axios'; 
 import { Redirect } from 'react-router';
+import '../App.css'; 
 
 
 //https://dev.to/alecgrey/controlled-forms-with-front-and-backend-validations-using-react-bootstrap-5a2
@@ -70,13 +71,11 @@ function Signup(){
         )
     }
 
-
     return(
-        <div>
+        <div className = "signup_container">
             <h3> Welcome to The Wellness Forum </h3>
             <h4> Create an account </h4>
-            <div className = "container">
-            <Form>
+            <div className = "signup_form">
             <Form.Group>
             <Form.Label>Name</Form.Label>
             <Row>
@@ -90,9 +89,6 @@ function Signup(){
             </Col>
             </Row>
             </Form.Group>
-
-            <br />
-        
             <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control type="email" placeholder="Enter email" 
@@ -135,9 +131,6 @@ function Signup(){
             <Button type="submit" onClick = {(e) => handleSubmit(e)}>
                 Sign me up!
             </Button>
-
-
-            </Form>
         </div>
         </div>
         )

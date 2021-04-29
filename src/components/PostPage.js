@@ -129,12 +129,24 @@ function PostPage(props){
             <div> 
             <div className = "post_details">
                 <h2 className = "post_title"> {props.postTitle}</h2>
-                <h3> Posted on : {moment(props.createdAt).format('MMMM Do YYYY')}</h3>
-                <h5> Posted by : {props.username} </h5>
+                <h5>Posted on {moment(props.createdAt).format('MMMM Do YYYY')}, by {props.username} </h5>
                 <p> {props.description} </p>
                 <br />
                 <br /> 
-                <h4> Please login or create an account to comment on the post </h4>
+                <p> Please <a href="/login">login</a> or
+                     <a href = "/signup"> create an account</a> to comment on the post </p>
+                
+                <div> 
+                {(commentsArray.length === 0) ? <p> There are no comments for this post yet </p> : <p> Comments: </p>}
+                {commentsArray.map((comment) => {
+                return(
+                    <div className = "comments_container">
+                    <div key = {comment._id}>{comment.content}</div>
+                    </div>
+                    )
+                 })
+                }
+                </div>     
             </div>
             </div>
             )}

@@ -23,20 +23,31 @@ function Post(props){
         )
     }
             
-    return(
-        <div className = "home_container">
-        <div className = "posts_container">
-            <Card bg="light" text="info" className="post_card text-center">
-            <Card.Header>Posted on {moment(props.post.createdAt).format('MMMM Do YYYY')} </Card.Header>
-            <Card.Body>
-            <Card.Title><Button type = "submit" onClick = {(e) => handlePostOpen(e)} >
-                {props.postTitle} </Button> </Card.Title>
-            <Button>{props.post.comments.length} Comments </Button>
-            </Card.Body>
-            <Card.Footer> Posted by {props.username} </Card.Footer> 
-            </Card>
-        </div>
-        </div>
+//     return(
+//         <div className = "home_container">
+//         <div className = "posts_container">
+//             <Card bg="light" text="info" className="post_card text-center">
+//             <Card.Header>Posted on {moment(props.post.createdAt).format('MMMM Do YYYY')} </Card.Header>
+//             <Card.Body>
+//             <Card.Title><Button type = "submit" onClick = {(e) => handlePostOpen(e)} >
+//                 {props.postTitle} </Button> </Card.Title>
+//             <Button  type = "submit" onClick = {(e) => handlePostOpen(e)}>
+//                 {props.post.comments.length} Comments </Button>
+//             </Card.Body>
+//             <Card.Footer> Posted by {props.username} </Card.Footer> 
+//             </Card>
+//         </div>
+//         </div>
+// )
+
+return(
+    <div className = "home_container">
+    <div className = "posts_container">
+        <p> Posted {moment().startOf('day').fromNow()} by {props.username}</p>
+        <h3><button type = "submit" onClick = {(e) => handlePostOpen(e)}>{props.postTitle} </button> </h3>
+        <p><button  type = "submit" onClick = {(e) => handlePostOpen(e)}>{props.post.comments.length} Comments </button> </p>
+    </div>
+    </div>
 )
 }
 
