@@ -10,6 +10,7 @@
   background-attachment: fixed;
   overflow-y: hidden;
   overflow-x: hidden;
+  font-family: 'Prata', serif;
 }
 
 .home_container {
@@ -84,6 +85,7 @@
 
 .post_details p {
   margin: 5px;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .description {
