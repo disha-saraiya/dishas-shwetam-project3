@@ -10,7 +10,7 @@ const [allPosts, setPosts] = useState([]);
 
 useEffect(() => {
   setTimeout(() => {
-    Axios.get('http://localhost:3000/api/posts/get').then((res) => {
+    Axios.get('/api/posts/get').then((res) => {
     setPosts(res.data.posts) 
   }).catch(error => console.error(error));
   }, 1000)
