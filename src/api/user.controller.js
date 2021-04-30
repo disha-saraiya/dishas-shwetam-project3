@@ -54,27 +54,6 @@ exports.getUser = function(req, res, next) {
     })
 }
 
-exports.updateUser = function(req, res, next) {
-    let user = {
-        username: req.body.username,
-        emailId: req.body.emailId,
-        password:req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        isActive:true
-    }
-    Users.updateOne({_id: req.params.id}, user, function(err, user) {
-        if(err) {
-            res.json({
-                error : err
-            })
-        }
-        res.json({
-            message : "User updated successfully"
-        })
-    })
-}
-
 exports.removeUser = function(req, res, next) {
     Users.delete({_id: req.params.id}, function(err, user) {
         if(err) {
@@ -87,7 +66,6 @@ exports.removeUser = function(req, res, next) {
         })
     })
 }
-
 
 
 // GET /logout

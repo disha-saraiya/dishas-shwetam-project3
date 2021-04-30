@@ -1,9 +1,7 @@
 let express = require('express');
 const path = require('path');
 
-let env = require("dotenv").config()
 
-//let log = require('morgan')('dev');
 let bodyParser = require('body-parser');
 
 let cors = require('cors');
@@ -66,10 +64,6 @@ app.use('/api',router);
 //call heros routing
 userRoutes(router);
 
-// app.use('*', express.static(path.join(__dirname, 'src', '../build')));
-// app.get('*', function (req, res) {
-// res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
 
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('*', (req, res) => {

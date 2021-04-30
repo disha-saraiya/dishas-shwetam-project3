@@ -1,6 +1,5 @@
 let Posts = require('./posts.dao');
 
-
 exports.createPost = function (req, res, next) {
     console.log(req.session.user._id); 
     let post = {

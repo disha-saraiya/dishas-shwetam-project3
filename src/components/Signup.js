@@ -35,7 +35,6 @@ function Signup(){
             if(!firstName || firstName === '') newErrors.firstName = "First name cannot be blank."
             if(!emailId || emailId === '') newErrors.emailId = "Email ID cannot be blank."
             if(!userName || userName === '') newErrors.userName = "Username cannot be blank."
-            //TODO : add username unique check 
             
             if(!password || password === '') newErrors.password = "Password cannot be blank."
             if(password !== confirmPassword) newErrors.confirmPassword = "Passwords do not match! Please enter the correct password"
@@ -55,11 +54,9 @@ function Signup(){
             
         }else{
             Axios.post('/api/create', form).then(function(response) {
-                console.log(response);
                 //Successful signup
                 setSignup(true); 
             }).catch(function(error){
-                console.log(error); 
                 setSignup(false); 
             });       
         }

@@ -48,7 +48,6 @@ function PostPage(props){
                 content: commentContent,
                 postId: props.postId,
             }).then(res => {
-                //console.log(res); 
                 setCommentsArray([...commentsArray, res.data])
             })
         
@@ -64,30 +63,6 @@ function PostPage(props){
             setCommentsArray([...commentsArray]);  
         })
     }
-
-    // const handleEditComment = (e) => {
-    //     e.preventDefault(); 
-    //     setEditComment(true);   
-    // }
-
-
-    // const handleSubmitEditedComment = (e, commentId)=> {
-    //     e.preventDefault(); 
-    //     console.log(commentsArray); 
-    //     let indexOfComment = commentsArray.findIndex(comment => comment._id === commentId);
-    //     // console.log(indexOfComment)
-    //     // setCommentsArray([commentsArray.splice(indexOfComment, 1, {content: 'new comment'})])
-    //     // console.log(commentsArray); 
-
-    //     axios.patch(`/api/comments/update/${props.postId}/${commentId}`, {
-    //         content: commentContent
-    //     }).then(res => {
-    //         //setCommentsArray([commentsArray.splice(indexOfComment,1) ,res.data.comment])
-    //         //setCommentsArray([commentsArray.splice(indexOfComment, 1, res.data.comment)])
-    //         console.log(res)
-    //     })
-    //     setEditComment(false); 
-    // }   
 
     const handleDeletePost = (e, postId) => {
         e.preventDefault(); 

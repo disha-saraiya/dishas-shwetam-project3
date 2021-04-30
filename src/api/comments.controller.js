@@ -83,25 +83,7 @@ exports.updateComment = function(req, res, next) {
             }
             });           
         }}
-        )}
-
-        //     Posts.findOneAndUpdate({"_id": req.params.postId}, {"title": req.body.title, 
-        //     "description": req.body.description }, function(error, response){
-        //     console.log(post); 
-        //     if(error) {
-        //         res.status(404).json({
-        //             error : "No such post found"
-        //         })
-        //     }else{
-        //         res.status(200).json({
-        //             message : "Post updated successfully",
-        //             post: response
-        //         })
-        //     }
-        // })
-//         }
-//     })
-// }
+        )   }
 
 exports.removeComment = function(req, res, next) {
     Comments.delete({_id: req.params.commentId}, function(err, comment) {

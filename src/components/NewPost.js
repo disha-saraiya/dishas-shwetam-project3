@@ -64,10 +64,6 @@ function NewPost(props){
             e.preventDefault()
     
             const newErrors = findFormErrors()
-            
-            // console.log(newErrors); 
-    
-            //If there is no description, replace the URL with the description.
             if(!form.description){
                 form.description = form.url; 
             }
@@ -82,12 +78,8 @@ function NewPost(props){
                     title: form.title,
                     description: form.description
                 }).then(function(res) {
-                    console.log(res);
-                    alert('Post created successfully.');
                     setPost(res.data.post); 
-
                 }).catch(function(error){
-                    console.log(error); 
                     alert('You need to be logged in to create a post!')
                 })
             }
@@ -100,7 +92,6 @@ function NewPost(props){
                 title: form.newTitle, 
                 description: form.newDescription
             }).then(res => {
-                console.log(res); 
                 setRedirectToHome(true); 
             })
         }
@@ -184,7 +175,7 @@ function NewPost(props){
         </div>
         )
     }
-
+    
     return(<h2> Please login to continue </h2>)
 }
 
