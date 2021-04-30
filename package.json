@@ -35,12 +35,12 @@
   },
   "scripts": {
     "devstart": "concurrently \"nodemon ./src/server.js\" \"react-scripts start\"",
-    "start": "serve -s build",
+    "start": "node ./src/server.js",
     "build": "react-scripts build",
     "eject": "react-scripts eject", 
-    "dev": "react-scripts start", 
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
   },
+
   "engines": {
     "node": "12.16.0"
   },
